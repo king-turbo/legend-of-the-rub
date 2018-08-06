@@ -1,5 +1,3 @@
-# legend-of-the-rub
-
 
 # Adding a new map
 
