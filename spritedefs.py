@@ -70,18 +70,29 @@ class Animation:
             self.speed = speed
             self.counter = 0
             self.clkDividedCount = 0
+            self.idlePos = pygame.image.load(imgs[0]).convert_alpha()
+            self.currentImg = pygame.image.load(self.imgs[0]).convert_alpha()
+            #TODO: come up with better way decide idle poistions
 
-        def update(self):
+
+        def update(self, backwards):
+            if backwards:
+                _bw = -1
+            else:
+                _bw = 1
             if self.counter >= self.speed:
                 self.clkDividedCount += 1
                 self.counter = 0
             if self.clkDividedCount >= len(self.imgs):
                 self.clkDividedCount = 0
-            self.currentImg = pygame.image.load(self.imgs[self.clkDividedCount]).convert_alpha()
+            self.currentImg = pygame.image.load(self.imgs[self.clkDividedCount * _bw]).convert_alpha()
             self.counter += 1
 
         def img(self):
             return self.currentImg
+
+
+
 
 
 

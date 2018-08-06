@@ -30,21 +30,47 @@ class Hero(pygame.sprite.Sprite):
 
 
 
-    def updateAnimation(self, left, right, up, down):
+    def updateAnimation(self, left, right, up, down, mouseX, mouseY):
 
-        self.walkRightAnimation.update()
-        self.walkLeftAnimation.update()
-        self.walkUpAnimation.update()
-        self.walkDownAnimation.update()
+        mouse_buff = 100
 
-        if right:
+        if not (left or right or up or down):
+            if mouseX > self.x + mouse_buff:
+                self.charImg = self.walkRightAnimation.idlePos
+            if mouseX < self.x - mouse_buff:
+                self.charImg = self.walkLeftAnimation.idlePos
+            if mouseY < self.y - mouse_buff:
+                self.charImg = self.walkUpAnimation.idlePos
+            if mouseY > self.y + mouse_buff:
+                self.charImg = self.walkDownAnimation.idlePos
+
+        if mouseX > self.x + mouse_buff and left:
+            self.walkRightAnimation.update(backwards=True)
             self.charImg = self.walkRightAnimation.img()
-        if left:
+        elif left:
+            self.walkLeftAnimation.update(backwards=False)
             self.charImg = self.walkLeftAnimation.img()
-        if up:
+
+        if mouseX < self.x - mouse_buff and right:
+            self.walkLeftAnimation.update(backwards=True)
+            self.charImg = self.walkLeftAnimation.img()
+        elif right:
+            self.walkRightAnimation.update(backwards=True)
+            self.charImg = self.walkRightAnimation.img()
+
+        if mouseY < self.y - mouse_buff and down:
+            self.walkUpAnimation.update(backwards=True)
             self.charImg = self.walkUpAnimation.img()
-        if down:
+        if mouseY <= self.y - mouse_buff and up:
+            self.walkUpAnimation.update(backwards=False)
+            self.charImg = self.walkUpAnimation.img()
+        if mouseY > self.y + mouse_buff and up:
+            self.walkDownAnimation.update(backwards=True)
             self.charImg = self.walkDownAnimation.img()
+        if mouseY > self.y + mouse_buff and down:
+            self. walkDownAnimation.update(backwards=False)
+            self.charImg = self.walkDownAnimation.img()
+
         self.charImg = pygame.transform.scale(self.charImg, self.size)
 
     def detectAttack(self,mouse1Press, mouse1Release, mouseX, mouseY, display):

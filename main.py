@@ -38,7 +38,7 @@ def mainLoop():
         movement(left,right,down,up)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
         spriteAttacks(mouse1, mouse1Release,mouseX,mouseY)
-        updateSprites(left, right, up, down, display_hitbox)
+        updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox)
 
 
         pygame.display.flip()
@@ -62,9 +62,9 @@ def spriteAttacks(mouse1Press,mouse1Release,mouseX,mouseY):
         sprite.detectDefend(mouse1Release,mouseX,mouseY, meeleeCoolDown,character)
 
 
-def updateSprites(left, right, up, down, display_hitbox):
+def updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox):
     _foreground = []
-    character.updateAnimation(left, right, up, down)
+    character.updateAnimation(left, right, up, down, mouseX, mouseY)
     for sprite in bg.npcSpriteList:
         sprite.updateAnimation(gameDisplay)
     for sprite in bg.envSpriteList + bg.npcSpriteList:
