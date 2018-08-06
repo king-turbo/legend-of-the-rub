@@ -37,8 +37,8 @@ def mainLoop():
 
         movement(left,right,down,up)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
-        spriteAttacks(mouse1, mouse1Release,mouseX,mouseY)
-        updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox)
+        bg.spriteAttacks(mouse1,mouse1Release,mouseX,mouseY,character=character,gameDisplay=gameDisplay)
+        bg.updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox, character=character, gameDisplay=gameDisplay)
 
 
         pygame.display.flip()
@@ -56,36 +56,6 @@ def movement(left,right,down,up):
     if up:
         bg.screenMove('up')
 
-def spriteAttacks(mouse1Press,mouse1Release,mouseX,mouseY):
-    meeleeCoolDown = character.detectAttack(mouse1Press,mouse1Release,mouseX,mouseY,gameDisplay)
-    for sprite in bg.npcSpriteList:
-        sprite.detectDefend(mouse1Release,mouseX,mouseY, meeleeCoolDown,character)
-
-
-def updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox):
-    _foreground = []
-    character.updateAnimation(left, right, up, down, mouseX, mouseY)
-    for sprite in bg.npcSpriteList:
-        sprite.updateAnimation(gameDisplay)
-    for sprite in bg.envSpriteList + bg.npcSpriteList:
-        _a = (sprite.spriteHeight - 32) * zoom
-        if sprite.y + _a < character.y:
-            gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
-        else:
-            _foreground.append(sprite)
-        gameDisplay.blit(character.charImg, (character.x, character.y))
-    for sprite in _foreground:
-        gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
-    bg.detectCollision(character)
-    if display_hitbox == True:
-        pygame.draw.rect(gameDisplay, SOMECOLOR2, character.collisionRect)
-        for sprite in bg.envSpriteList + bg.npcSpriteList:
-            pygame.draw.rect(gameDisplay, SOMECOLOR, sprite.collisionRect)
-        for sprite in bg.npcSpriteList:
-            pygame.draw.rect(gameDisplay,SOMECOLOR2,sprite.attackRect)
-            # pygame.draw.circle(gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
-
-
 
 if __name__ == "__main__":
     pygame.init()
@@ -96,13 +66,12 @@ if __name__ == "__main__":
     DISPLAY_WIDTH = 1440
     DISPLAY_HEIGHT = 900
     FRAME_SPEED = 60
-    toggleArray = [0, 0, 0, 0, 0, 0]
     zoom = 3
 
     gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), RESIZABLE)
 
     clock = pygame.time.Clock()
-    heroSpeed = 5
+    heroSpeed = 6
     character = Hero(DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
     bg = Background(heroSpeed, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT)
     map = mapeditor.Map(maps.treecode)

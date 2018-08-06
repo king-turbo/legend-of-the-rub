@@ -7,6 +7,9 @@ from environmentsprites import Tree, Rock
 pygame.init()
 cwd = os.getcwd()
 
+SOMECOLOR2 = (32, 51, 11)
+SOMECOLOR = (124, 10, 55)
+
 class Background(pygame.sprite.Sprite):
     def __init__(self, collidedSpritespeed, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
         pygame.sprite.Sprite.__init__(self)
@@ -21,6 +24,7 @@ class Background(pygame.sprite.Sprite):
         self.upEnable = True
         self.downEnable = True
         self.currentcollidedSpriteSpeed = self.collidedSpriteSpeed
+
 
     def addSprites(self, spriteDict):
 
@@ -106,6 +110,33 @@ class Background(pygame.sprite.Sprite):
 
 
 
+    def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
+        _foreground = []
+        character.updateAnimation(left, right, up, down, mouseX, mouseY)
+        for sprite in self.npcSpriteList:
+            sprite.updateAnimation(gameDisplay)
+        for sprite in self.envSpriteList + self.npcSpriteList:
+            _a = (sprite.spriteHeight - 32) * self.zoom
+            if sprite.y + _a < character.y:
+                gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+            else:
+                _foreground.append(sprite)
+            gameDisplay.blit(character.charImg, (character.x, character.y))
+        for sprite in _foreground:
+            gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+        self.detectCollision(character)
+        if display_hitbox == True:
+            pygame.draw.rect(gameDisplay, SOMECOLOR2, character.collisionRect)
+            for sprite in self.envSpriteList + self.npcSpriteList:
+                pygame.draw.rect(gameDisplay, SOMECOLOR, sprite.collisionRect)
+            for sprite in self.npcSpriteList:
+                pygame.draw.rect(gameDisplay,SOMECOLOR2,sprite.attackRect)
+                # pygame.draw.circle(gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
 
+
+    def spriteAttacks(self,mouse1Press,mouse1Release,mouseX,mouseY,character,gameDisplay):
+        meeleeCoolDown = character.detectAttack(mouse1Press,mouse1Release,mouseX,mouseY,gameDisplay)
+        for sprite in self.npcSpriteList:
+            sprite.detectDefend(mouse1Release,mouseX,mouseY, meeleeCoolDown,character)
 
 
