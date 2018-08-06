@@ -43,21 +43,18 @@ class Hero(pygame.sprite.Sprite):
                 self.charImg = self.walkUpAnimation.idlePos
             if mouseY > self.y + mouse_buff:
                 self.charImg = self.walkDownAnimation.idlePos
-
         if mouseX > self.x + mouse_buff and left:
             self.walkRightAnimation.update(backwards=True)
             self.charImg = self.walkRightAnimation.img()
         elif left:
             self.walkLeftAnimation.update(backwards=False)
             self.charImg = self.walkLeftAnimation.img()
-
         if mouseX < self.x - mouse_buff and right:
             self.walkLeftAnimation.update(backwards=True)
             self.charImg = self.walkLeftAnimation.img()
         elif right:
             self.walkRightAnimation.update(backwards=True)
             self.charImg = self.walkRightAnimation.img()
-
         if mouseY < self.y - mouse_buff and down:
             self.walkUpAnimation.update(backwards=True)
             self.charImg = self.walkUpAnimation.img()

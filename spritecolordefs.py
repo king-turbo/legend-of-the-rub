@@ -4,17 +4,17 @@ DARK_RED = (136, 0, 21)
 
 
 class SpriteCodes:
-    treeCode = [DARK_GREEN, DARK_GREEN, DARK_GREEN,
+    treeCode = (DARK_GREEN, DARK_GREEN, DARK_GREEN,
                 DARK_GREEN, DARK_GREEN, DARK_GREEN,
-                DARK_GREEN, DARK_GREEN, DARK_GREEN]
+                DARK_GREEN, DARK_GREEN, DARK_GREEN)
 
-    rockCode = [DARK_GRAY, DARK_GRAY, DARK_GRAY,
+    rockCode = (DARK_GRAY, DARK_GRAY, DARK_GRAY,
                 DARK_GRAY, DARK_GRAY, DARK_GRAY,
-                DARK_GRAY, DARK_GRAY, DARK_GRAY]
+                DARK_GRAY, DARK_GRAY, DARK_GRAY)
 
-    peonCode = [DARK_RED, DARK_RED, DARK_RED,
+    peonCode = (DARK_RED, DARK_RED, DARK_RED,
                 DARK_RED, DARK_RED, DARK_RED,
-                DARK_RED, DARK_RED, DARK_RED]
+                DARK_RED, DARK_RED, DARK_RED)
 
 
 
