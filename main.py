@@ -25,10 +25,8 @@ def mainLoop():
         keys = pygame.key.get_pressed()
         mouse1, mouse2, mouse3 = pygame.mouse.get_pressed()
         mouseX, mouseY = pygame.mouse.get_pos()
-
         mouse1Release = mouse1SingleRelease.update(mouse1)
         mouse1Press = mouse1SinglePress.update(mouse1)
-
         left = keys[K_a]
         right = keys[K_d]
         down = keys[K_s]
@@ -37,13 +35,12 @@ def mainLoop():
 
         movement(left,right,down,up)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
+
         bg.spriteAttacks(mouse1,mouse1Release,mouseX,mouseY,character=character,gameDisplay=gameDisplay)
         bg.updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox, character=character, gameDisplay=gameDisplay)
 
-
         pygame.display.flip()
         procTime = time.time() - tic
-
         clock.tick(FRAME_SPEED - procTime)
 
 def movement(left,right,down,up):
@@ -72,8 +69,8 @@ if __name__ == "__main__":
 
     clock = pygame.time.Clock()
     heroSpeed = 6
-    character = Hero(DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
-    bg = Background(heroSpeed, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT)
+    character = Hero(heroSpeed, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
+    bg = Background(zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character)
     map = mapeditor.Map(maps.treecode)
     # map = mapeditor.Map(maps.treecode1)
     bg.addSprites(map.parseMap())

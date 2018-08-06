@@ -11,11 +11,10 @@ SOMECOLOR2 = (32, 51, 11)
 SOMECOLOR = (124, 10, 55)
 
 class Background(pygame.sprite.Sprite):
-    def __init__(self, collidedSpritespeed, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
+    def __init__(self, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character):
         pygame.sprite.Sprite.__init__(self)
         self.envSpriteList = []
         self.npcSpriteList = []
-        self.collidedSpriteSpeed = collidedSpritespeed
         self.DISPLAY_HEIGHT = DISPLAY_HEIGHT
         self.DISPLAY_WIDTH = DISPLAY_WIDTH
         self.zoom = zoom
@@ -23,7 +22,8 @@ class Background(pygame.sprite.Sprite):
         self.leftEnable = True
         self.upEnable = True
         self.downEnable = True
-        self.currentcollidedSpriteSpeed = self.collidedSpriteSpeed
+        self.character = character
+        self.heroSpeed = self.character.heroSpeed
 
 
     def addSprites(self, spriteDict):
@@ -85,30 +85,30 @@ class Background(pygame.sprite.Sprite):
             self.rightEnable = all(_enableListRight)
             self.leftEnable = all(_enableListLeft)
 
-    def screenMove(self, direction):
+    def updateHeroSpeed(self):
+        self.heroSpeed = self.character.heroSpeed
 
+    def screenMove(self, direction):
+        self.updateHeroSpeed()
         if direction == 'left' and self.leftEnable == True:
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x += self.currentcollidedSpriteSpeed
-                sprite.updateCollisionBox(self.currentcollidedSpriteSpeed, 0)
+                sprite.x += self.heroSpeed
+                sprite.updateCollisionBox(self.heroSpeed, 0)
 
         if direction == 'right' and self.rightEnable == True:
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x -= self.currentcollidedSpriteSpeed
-                sprite.updateCollisionBox(-self.currentcollidedSpriteSpeed, 0)
+                sprite.x -= self.heroSpeed
+                sprite.updateCollisionBox(-self.heroSpeed, 0)
 
         if direction == 'up' and self.upEnable == True:
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y += self.currentcollidedSpriteSpeed
-                sprite.updateCollisionBox(0, self.currentcollidedSpriteSpeed)
+                sprite.y += self.heroSpeed
+                sprite.updateCollisionBox(0, self.heroSpeed)
 
         if direction == 'down' and self.downEnable == True:
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y -= self.currentcollidedSpriteSpeed
-                sprite.updateCollisionBox(0, -self.currentcollidedSpriteSpeed)
-
-
-
+                sprite.y -= self.heroSpeed
+                sprite.updateCollisionBox(0, -self.heroSpeed)
 
     def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
         _foreground = []
@@ -134,9 +134,9 @@ class Background(pygame.sprite.Sprite):
                 # pygame.draw.circle(gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
 
 
-    def spriteAttacks(self,mouse1Press,mouse1Release,mouseX,mouseY,character,gameDisplay):
-        meeleeCoolDown = character.detectAttack(mouse1Press,mouse1Release,mouseX,mouseY,gameDisplay)
+    def spriteAttacks(self,mouse1Press, mouse1Release, mouseX, mouseY, character, gameDisplay):
+        meeleeCoolDown = character.detectAttack(mouse1Press, mouse1Release, mouseX, mouseY, gameDisplay)
         for sprite in self.npcSpriteList:
-            sprite.detectDefend(mouse1Release,mouseX,mouseY, meeleeCoolDown,character)
+            sprite.detectDefend(mouse1Release, mouseX, mouseY, meeleeCoolDown,character)
 
 
