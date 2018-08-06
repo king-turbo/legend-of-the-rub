@@ -7,10 +7,13 @@ from spriteimages import EnvironmentImages as envImg
 
 class Tree(EnvSprite):
     def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
-        collisionWidth = 48
-        collisionHeight = 48
+        collisionWidth = 70
+        collisionHeight = 30
+        collisionOffsetX = -60
+        collisionOffsetY = 0
         self.img = pygame.image.load(envImg.tree1)
-        EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)
+        EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight,
+                           collisionOffsetX, collisionOffsetY)
 
 
 class Rock(EnvSprite):

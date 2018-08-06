@@ -5,7 +5,8 @@ from pygame.locals import *
 
 
 class EnvSprite(pygame.sprite.Sprite):
-    def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight):
+    def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, collisionOffsetX=0,
+                 collisionOffsetY=0):
         pygame.sprite.Sprite.__init__(self)
         self.spriteHeight = self.img.get_height()
         self.DISPLAY_WIDTH = display_width
@@ -19,8 +20,11 @@ class EnvSprite(pygame.sprite.Sprite):
         self.rect = self.img.get_rect()
         self.collisionWidth = collisionWidth
         self.collisionHeight = collisionHeight
-        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.collisionWidth / 2,
-                                          self.y + (self.spriteHeight) * zoom - self.collisionHeight + 10),
+        self.collisionoffsetX = collisionOffsetX
+        self.collisionoffsetY = collisionOffsetY
+        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.collisionWidth / 2 +
+                                          self.collisionoffsetX, self.y + (self.spriteHeight) * zoom -
+                                          self.collisionHeight + 10 + self.collisionoffsetY),
                                          (self.collisionWidth, self.collisionHeight))
 
     def updateCollisionBox(self, x, y):
@@ -52,8 +56,8 @@ class NPCSprite(pygame.sprite.Sprite):
                                           self.y + (self.spriteHeight) * zoom - self.attackHeight),
                                          (self.attackWidth, self.attackHeight))
 
-
-        self.zoneOfAttack = [[int(self.x + self.spriteWidth/2 * zoom), int(self.y + self.spriteHeight/2*zoom)], int(self.spriteHeight/2 * zoom) + 45]
+        self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
+                             int(self.spriteHeight / 2 * zoom) + 45]
 
 
     def updateCollisionBox(self, x, y):
