@@ -61,3 +61,38 @@ class NPCSprite(pygame.sprite.Sprite):
         self.attackRect.move_ip(x,y)
         self.zoneOfAttack[0][0] += x
         self.zoneOfAttack[0][1] += y
+
+
+
+class Animation:
+        def __init__(self, imgs, speed):
+            self.imgs = imgs
+            self.speed = speed
+            self.counter = 0
+            self.clkDividedCount = 0
+
+        def update(self):
+            if self.counter >= self.speed:
+                self.clkDividedCount += 1
+                self.counter = 0
+            if self.clkDividedCount >= len(self.imgs):
+                self.clkDividedCount = 0
+            self.currentImg = pygame.image.load(self.imgs[self.clkDividedCount]).convert_alpha()
+            self.counter += 1
+
+        def img(self):
+            return self.currentImg
+
+
+
+
+
+
+
+
+
+
+
+
+
+

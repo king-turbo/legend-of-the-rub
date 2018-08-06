@@ -1,7 +1,7 @@
 import pygame
 from spriteimages import CharacterImgs as chImg
 from spriteimages import WeaponImages as wpnImg
-
+from spritedefs import Animation
 
 class Hero(pygame.sprite.Sprite):
     def __init__(self, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom):
@@ -17,39 +17,34 @@ class Hero(pygame.sprite.Sprite):
         self.spriteWidth = self.charImg.get_width()
         self.spriteHeight = self.charImg.get_height()
         self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 3), self.y + self.spriteHeight - 10), (32, 10))
-        self.ii = 0
-        self.i = 0
-        self.tt = 0
         self.meeleCoolDown = False
         self.meeleCoolDownCounter = 0
-        #Sprite Images
-        self.walkRightArray = chImg.walkRightArray
-        self.walkLeftArray = chImg.walkLeftArray
-        self.walkUpArray = chImg.walkUpArray
-        self.walkDownArray = chImg.walkDownArray
+        #Sprite Animations
+        self.walkRightAnimation = Animation(chImg.walkRightArray, 5)
+        self.walkLeftAnimation = Animation(chImg.walkLeftArray,5)
+        self.walkUpAnimation = Animation(chImg.walkUpArray, 5)
+        self.walkDownAnimation = Animation(chImg.walkDownArray, 5)
 
         self.swordImg =[pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
                         pygame.transform.scale(pygame.image.load(wpnImg.swordImg[1]),self.size)]
 
+
+
     def updateAnimation(self, left, right, up, down):
 
-        self.i += 1
-        if self.i == 7:
-            self.ii += 1
-            self.tt += 1
-            self.i = 0
-        if self.tt == 2:
-            self.tt = 0
-        if self.ii == 4:
-            self.ii = 0
+        self.walkRightAnimation.update()
+        self.walkLeftAnimation.update()
+        self.walkUpAnimation.update()
+        self.walkDownAnimation.update()
+
         if right:
-            self.charImg = pygame.image.load(self.walkRightArray[self.ii]).convert_alpha()
+            self.charImg = self.walkRightAnimation.img()
         if left:
-            self.charImg = pygame.image.load(self.walkLeftArray[self.ii]).convert_alpha()
+            self.charImg = self.walkLeftAnimation.img()
         if up:
-            self.charImg = pygame.image.load(self.walkUpArray[self.tt]).convert_alpha()
+            self.charImg = self.walkUpAnimation.img()
         if down:
-            self.charImg = pygame.image.load(self.walkDownArray[self.tt]).convert_alpha()
+            self.charImg = self.walkDownAnimation.img()
         self.charImg = pygame.transform.scale(self.charImg, self.size)
 
     def detectAttack(self,mouse1Press, mouse1Release, mouseX, mouseY, display):
