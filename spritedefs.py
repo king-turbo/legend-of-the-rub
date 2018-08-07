@@ -94,6 +94,21 @@ class NPCSprite(pygame.sprite.Sprite):
                     self.health -= 10
                     self.hit = True
 
+    def BadAI(self,character):
+        speed = 2
+        if character.x - self.x < 10:
+            self.x -= speed
+            self.updateCollisionBox(-speed, 0)
+        if character.x - self.x > 10:
+            self.x += speed
+            self.updateCollisionBox(speed, 0)
+        if character.y - self.y > 10:
+            self.y += speed
+            self.updateCollisionBox(0, speed)
+        if character.y - self.y < 10:
+            self.y -= speed
+            self.updateCollisionBox(0, -speed)
+
 
 class Animation:
         def __init__(self, imgs, speed):
@@ -121,6 +136,8 @@ class Animation:
 
         def img(self):
             return self.currentImg
+
+
 
 
 

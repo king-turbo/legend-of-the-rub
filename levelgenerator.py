@@ -112,6 +112,7 @@ class Background(pygame.sprite.Sprite):
 
     def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
         _foreground = []
+        self.updateAI(character)
         character.updateAnimation(left, right, up, down, mouseX, mouseY)
         for sprite in self.npcSpriteList:
             sprite.updateAnimation(gameDisplay)
@@ -140,3 +141,7 @@ class Background(pygame.sprite.Sprite):
             sprite.detectDefend(mouse1Release, mouseX, mouseY, meeleeCoolDown,character)
 
 
+
+    def updateAI(self, character):
+        for sprite in self.npcSpriteList:
+            sprite.BadAI(character)
