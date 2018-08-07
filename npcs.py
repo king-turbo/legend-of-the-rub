@@ -25,29 +25,9 @@ class PeonNPC(NPCSprite):
         self.health = 100
         self.minusTen = pygame.image.load(txtImg.minusTen)
         self.size = tuple([i * zoom for i in self.minusTen.get_rect().size])
-        self.minusTen = pygame.transform.scale(self.minusTen, self.size)
+
         self.hit = False
         self.hitAnimaitonCounter = 0
         NPCSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight, attackWidth, attackHeight)
 
 
-    def updateAnimation(self, display):
-
-        if self.hit:
-            self.hitAnimaitonCounter += 1
-            display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter *2))
-
-            if self.hitAnimaitonCounter == 10:
-                self.hitAnimaitonCounter = 0
-                self.hit = False
-
-
-    def detectDefend(self,mouse1,mouseX,mouseY, meeleCoolDown, character):
-
-        if (character.centerX - self.zoneOfAttack[0][0])**2 +(character.centerY - self.zoneOfAttack[0][1])**2 < self.zoneOfAttack[1]**2:
-            if mouse1 and meeleCoolDown == False:
-                if self.attackRect.collidepoint(mouseX, mouseY):
-                    self.health -= 10
-                    self.hit = True
-            if self.health <= 0:
-                pass

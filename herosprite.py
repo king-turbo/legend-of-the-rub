@@ -91,11 +91,11 @@ class Hero(pygame.sprite.Sprite):
             self.heroSpeed = self.defaultSpeed
             self.attackDirection = 'up'
 
-
-        print(self.attackDirection)
         self.charImg = pygame.transform.scale(self.charImg, self.size)
 
     def detectAttack(self,mouse1Press, mouse1Release, mouseX, mouseY, display):
+
+
         if mouse1Press:
             display.blit(self.swordImg[0],(self.x -20, self.y - 20))
         if mouse1Release:

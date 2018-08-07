@@ -32,8 +32,10 @@ class EnvSprite(pygame.sprite.Sprite):
 
 
 class NPCSprite(pygame.sprite.Sprite):
-    def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, attackWidth, attackHeight):
+    def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, attackWidth,
+                 attackHeight):
         pygame.sprite.Sprite.__init__(self)
+        self.minusTen = pygame.transform.scale(self.minusTen, self.size)
         self.spriteHeight = self.img.get_height()
         self.DISPLAY_WIDTH = display_width
         self.DISPLAY_HEIGHT = display_height
@@ -53,19 +55,44 @@ class NPCSprite(pygame.sprite.Sprite):
                                          (self.collisionWidth, self.collisionHeight))
 
         self.attackRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.attackWidth / 2,
-                                          self.y + (self.spriteHeight) * zoom - self.attackHeight),
-                                         (self.attackWidth, self.attackHeight))
+                                       self.y + (self.spriteHeight) * zoom - self.attackHeight),
+                                      (self.attackWidth, self.attackHeight))
 
         self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
                              int(self.spriteHeight / 2 * zoom) + 45]
 
-
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
-        self.attackRect.move_ip(x,y)
+        self.attackRect.move_ip(x, y)
         self.zoneOfAttack[0][0] += x
         self.zoneOfAttack[0][1] += y
 
+    def updateAnimation(self, display):
+        if self.hit:
+            self.hitAnimaitonCounter += 1
+            display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter * 2))
+
+            if self.hitAnimaitonCounter == 10:
+                self.hitAnimaitonCounter = 0
+                self.hit = False
+
+    def detectDefend(self, mouse1, mouseX, mouseY, meeleCoolDown, character):
+        if mouse1:
+            if (character.centerX - self.zoneOfAttack[0][0]) ** 2 + (character.centerY - self.zoneOfAttack[0][1]) ** 2 < \
+                            self.zoneOfAttack[1] ** 2:
+                if character.centerX < self.attackRect.centerx and character.attackDirection == 'right':
+                    self.health -= 10
+                    self.hit = True
+                if character.centerX > self.attackRect.centerx and character.attackDirection == 'left':
+                    self.health -= 10
+                    self.hit = True
+
+                if character.centerY < self.attackRect.centery and character.attackDirection == 'down':
+                    self.health -= 10
+                    self.hit = True
+                if character.centerY > self.attackRect.centery and character.attackDirection == 'up':
+                    self.health -= 10
+                    self.hit = True
 
 
 class Animation:
