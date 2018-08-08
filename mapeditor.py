@@ -47,6 +47,6 @@ class Map:
 
 class MapDir:
 
-    treecode = cwd + '\maps\\treecode.png'
-    treecode1 = cwd + '\maps\\treecode1.png'
-    whittest = cwd + '\maps\\white.png'
+    treecode = os.path.join(cwd, 'maps', 'treecode.png')
+    treecode1 = os.path.join(cwd, 'maps','treecode1.png')
+    whittest = os.path.join(cwd, 'maps', 'white.png')
