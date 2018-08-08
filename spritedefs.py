@@ -63,7 +63,7 @@ class NPCSprite(pygame.sprite.Sprite):
 
         self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
                              int(self.spriteHeight / 2 * zoom) + 45]
-
+        self.direction = 'right'
         self.upEnable = True
         self.downEnable = True
         self.rightEnable = True
@@ -82,14 +82,7 @@ class NPCSprite(pygame.sprite.Sprite):
         self.zoneOfAttack[0][0] += x
         self.zoneOfAttack[0][1] += y
 
-    def updateAnimation(self, display):
-        if self.hit:
-            self.hitAnimaitonCounter += 1
-            display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter * 2))
 
-            if self.hitAnimaitonCounter == 10:
-                self.hitAnimaitonCounter = 0
-                self.hit = False
 
     def detectDefend(self, mouse1, mouseX, mouseY, meeleCoolDown, character):
         if mouse1:
@@ -113,18 +106,21 @@ class NPCSprite(pygame.sprite.Sprite):
         speed = 2
 
         if character.x - self.x < 20 and self.leftEnable:
+            self.direction = 'left'
             self.x -= speed
             self.updateCollisionBox(-speed, 0)
         if character.x - self.x > 20 and self.rightEnable:
+            self.direction = 'right'
             self.x += speed
             self.updateCollisionBox(speed, 0)
         if character.y - self.y > 20 and self.downEnable:
+            self.direction = 'down'
             self.y += speed
             self.updateCollisionBox(0, speed)
         if character.y - self.y < 20 and self.upEnable:
+            self.direction = 'up'
             self.y -= speed
             self.updateCollisionBox(0, -speed)
-
 
 
     def detectCollision(self, spriteList):
@@ -162,7 +158,6 @@ class NPCSprite(pygame.sprite.Sprite):
                     _leftEnable = False
                 else:
                     _leftEnable = True
-
                 if self.collisionRect.midright[0] <= sprite.collisionRect.centerx and \
                                 sprite.collisionRect.topleft[1] <= self.collisionRect.midleft[1] \
                                 and self.collisionRect.midbottom[1] <= sprite.collisionRect.bottomleft[1]:
@@ -186,9 +181,6 @@ class NPCSprite(pygame.sprite.Sprite):
             self.leftEnable = all(_enableListLeft)
 
 
-
-
-
 class Animation:
         def __init__(self, imgs, speed):
             self.imgs = imgs
@@ -200,7 +192,7 @@ class Animation:
             #TODO: come up with better way decide idle poistions
 
 
-        def update(self, backwards):
+        def update(self, backwards=False):
             if backwards:
                 _bw = -1
             else:
