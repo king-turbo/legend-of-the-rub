@@ -7,7 +7,7 @@ import random
 from pygame.locals import *
 from spritedefs import EnvSprite, NPCSprite
 import os
-from spriteimages import TextImgs as txtImg
+from spriteimages import TextImgs
 
 pygame.init()
 cwd = os.getcwd()
@@ -23,7 +23,7 @@ class PeonNPC(NPCSprite):
         attackHeight = 100
         self.img = pygame.image.load(chImg.standing)
         self.health = 100
-        self.minusTen = pygame.image.load(txtImg.minusTen)
+        self.minusTen = pygame.image.load(TextImgs.minusTen)
         self.size = tuple([i * zoom for i in self.minusTen.get_rect().size])
 
         self.hit = False

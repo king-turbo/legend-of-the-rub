@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import os
 from npcs import PeonNPC
-from environmentsprites import Tree, Rock
+from environmentsprites import Tree, Bush
 import math
 pygame.init()
 cwd = os.getcwd()
@@ -31,8 +31,8 @@ class Background(pygame.sprite.Sprite):
         self.spriteCollisionGroup = pygame.sprite.Group()
         for treeLoc in spriteDict['tree']:
             self.envSpriteList.append(Tree(treeLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
-        for rockLoc in spriteDict['rock']:
-            self.envSpriteList.append(Rock(rockLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
+        for bushLoc in spriteDict['bush']:
+            self.envSpriteList.append(Bush(bushLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
         for peonLoc in spriteDict['peon']:
             self.npcSpriteList.append(PeonNPC(peonLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
 
@@ -101,7 +101,6 @@ class Background(pygame.sprite.Sprite):
         if right and self.rightEnable == True:
             if up or down:
                 _diag = math.sqrt(2)
-                print(_diag)
             for sprite in self.envSpriteList + self.npcSpriteList:
                 sprite.x -= self.heroSpeed / _diag
                 sprite.updateCollisionBox(-self.heroSpeed / _diag, 0)

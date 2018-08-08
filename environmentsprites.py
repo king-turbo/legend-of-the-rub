@@ -16,7 +16,7 @@ class Tree(EnvSprite):
                            collisionOffsetX, collisionOffsetY)
 
 
-class Rock(EnvSprite):
+class Bush(EnvSprite):
     def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
         collisionWidth = 128
         collisionHeight = 64

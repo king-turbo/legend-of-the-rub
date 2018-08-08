@@ -8,7 +8,7 @@ class SpriteCodes:
                 DARK_GREEN, DARK_GREEN, DARK_GREEN,
                 DARK_GREEN, DARK_GREEN, DARK_GREEN)
 
-    rockCode = (DARK_GRAY, DARK_GRAY, DARK_GRAY,
+    bushCode = (DARK_GRAY, DARK_GRAY, DARK_GRAY,
                 DARK_GRAY, DARK_GRAY, DARK_GRAY,
                 DARK_GRAY, DARK_GRAY, DARK_GRAY)
 
@@ -20,4 +20,4 @@ class SpriteCodes:
 
 
 
-    sprites = [('tree', treeCode), ('rock', rockCode), ('peon', peonCode)]
+    sprites = [('tree', treeCode), ('bush', bushCode), ('peon', peonCode)]

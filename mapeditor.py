@@ -50,3 +50,4 @@ class MapDir:
     treecode = os.path.join(cwd, 'maps', 'treecode.png')
     treecode1 = os.path.join(cwd, 'maps','treecode1.png')
     whittest = os.path.join(cwd, 'maps', 'white.png')
+    twodudes = os.path.join(cwd,'maps','twodudes.png')
