@@ -69,8 +69,12 @@ class NPCSprite(pygame.sprite.Sprite):
         self.rightEnable = True
         self.leftEnable = True
 
+
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
+
+    def __gt__(self,other):
+        return self.IDNum > other.IDNum
 
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
@@ -105,8 +109,9 @@ class NPCSprite(pygame.sprite.Sprite):
                     self.health -= 10
                     self.hit = True
 
-    def BadAI(self,character):
+    def badAI(self, character):
         speed = 2
+
         if character.x - self.x < 20 and self.leftEnable:
             self.x -= speed
             self.updateCollisionBox(-speed, 0)
@@ -118,7 +123,7 @@ class NPCSprite(pygame.sprite.Sprite):
             self.updateCollisionBox(0, speed)
         if character.y - self.y < 20 and self.upEnable:
             self.y -= speed
-            self.updateCollisionBox(0, - speed)
+            self.updateCollisionBox(0, -speed)
 
 
 
@@ -131,27 +136,36 @@ class NPCSprite(pygame.sprite.Sprite):
 
         for sprite in spriteList:
             if self.collisionRect.colliderect(sprite.collisionRect):
+
+                if self > sprite and sprite.spriteType == "NPC":
+                    self.upEnable = False
+                    self.downEnable = False
+                    self.rightEnable = False
+                    self.leftEnable = False
+                    break
+
                 if self.collisionRect.midtop[1] >= sprite.collisionRect.centery and \
-                                sprite.collisionRect.bottomleft[0] < self.collisionRect.midtop[0] \
-                                and self.collisionRect.midtop[0] < sprite.collisionRect.bottomright[0]:
+                                sprite.collisionRect.bottomleft[0] <= self.collisionRect.midtop[0] \
+                                and self.collisionRect.midtop[0] <= sprite.collisionRect.bottomright[0]:
                     _upEnable = False
                 else:
                     _upEnable = True
                 if self.collisionRect.midtop[1] <= sprite.collisionRect.centery and \
-                                sprite.collisionRect.topleft[0] < self.collisionRect.midbottom[0]\
-                                and self.collisionRect.midbottom[0] < sprite.collisionRect.topright[0]:
+                                sprite.collisionRect.topleft[0] <= self.collisionRect.midbottom[0]\
+                                and self.collisionRect.midbottom[0] <= sprite.collisionRect.topright[0]:
                     _downEnable = False
                 else:
                     _downEnable = True
                 if self.collisionRect.midleft[0] >= sprite.collisionRect.centerx and \
-                                sprite.collisionRect.topright[1] < self.collisionRect.midleft[1]\
-                                and self.collisionRect.midbottom[1] <  sprite.collisionRect.bottomright[1]:
+                                sprite.collisionRect.topright[1] <= self.collisionRect.midleft[1]\
+                                and self.collisionRect.midbottom[1] <=  sprite.collisionRect.bottomright[1]:
                     _leftEnable = False
                 else:
                     _leftEnable = True
+
                 if self.collisionRect.midright[0] <= sprite.collisionRect.centerx and \
-                                sprite.collisionRect.topleft[1] < self.collisionRect.midleft[1] \
-                                and self.collisionRect.midbottom[1] < sprite.collisionRect.bottomleft[1]:
+                                sprite.collisionRect.topleft[1] <= self.collisionRect.midleft[1] \
+                                and self.collisionRect.midbottom[1] <= sprite.collisionRect.bottomleft[1]:
                     _rightEnable = False
                 else:
                     _rightEnable = True
@@ -170,6 +184,10 @@ class NPCSprite(pygame.sprite.Sprite):
             self.downEnable = all(_enableListDown)
             self.rightEnable = all(_enableListRight)
             self.leftEnable = all(_enableListLeft)
+
+
+
+
 
 class Animation:
         def __init__(self, imgs, speed):

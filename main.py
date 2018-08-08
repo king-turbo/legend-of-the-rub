@@ -46,7 +46,6 @@ def mainLoop():
 
 
 
-
 if __name__ == "__main__":
     pygame.init()
     # Constants
@@ -64,8 +63,8 @@ if __name__ == "__main__":
     character = Hero(heroSpeed, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
     bg = Background(zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character)
     # map = mapeditor.Map(maps.treecode)
-    map = mapeditor.Map(maps.treecode1)
-    # map = mapeditor.Map(maps.twodudes)
+    # map = mapeditor.Map(maps.treecode1)
+    map = mapeditor.Map(maps.twodudes)
     bg.addSprites(map.parseMap())
 
     mainLoop()
