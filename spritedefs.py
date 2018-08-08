@@ -61,6 +61,12 @@ class NPCSprite(pygame.sprite.Sprite):
         self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
                              int(self.spriteHeight / 2 * zoom) + 45]
 
+        self.upEnable = True
+        self.downEnable = True
+        self.rightEnable = True
+        self.leftEnable = True
+
+
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
         self.attackRect.move_ip(x, y)
@@ -96,19 +102,69 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def BadAI(self,character):
         speed = 2
-        if character.x - self.x < 10:
+        if character.x - self.x < 20 and self.leftEnable:
             self.x -= speed
             self.updateCollisionBox(-speed, 0)
-        if character.x - self.x > 10:
+        if character.x - self.x > 20 and self.rightEnable:
             self.x += speed
             self.updateCollisionBox(speed, 0)
-        if character.y - self.y > 10:
+        if character.y - self.y > 20 and self.downEnable:
             self.y += speed
             self.updateCollisionBox(0, speed)
-        if character.y - self.y < 10:
+        if character.y - self.y < 20 and self.upEnable:
             self.y -= speed
-            self.updateCollisionBox(0, -speed)
+            self.updateCollisionBox(0, - speed)
 
+
+
+    def detectCollision(self, spriteList):
+
+        _enableListUp = []
+        _enableListDown = []
+        _enableListRight = []
+        _enableListLeft = []
+
+        for sprite in spriteList:
+            if self.collisionRect.colliderect(sprite.collisionRect):
+                if self.collisionRect.midtop[1] >= sprite.collisionRect.centery and \
+                                sprite.collisionRect.bottomleft[0] < self.collisionRect.midtop[0] \
+                                and self.collisionRect.midtop[0] < sprite.collisionRect.bottomright[0]:
+                    _upEnable = False
+                else:
+                    _upEnable = True
+                if self.collisionRect.midtop[1] <= sprite.collisionRect.centery and \
+                                sprite.collisionRect.topleft[0] < self.collisionRect.midbottom[0]\
+                                and self.collisionRect.midbottom[0] < sprite.collisionRect.topright[0]:
+                    _downEnable = False
+                else:
+                    _downEnable = True
+                if self.collisionRect.midleft[0] >= sprite.collisionRect.centerx and \
+                                sprite.collisionRect.topright[1] < self.collisionRect.midleft[1]\
+                                and self.collisionRect.midbottom[1] <  sprite.collisionRect.bottomright[1]:
+                    _leftEnable = False
+                else:
+                    _leftEnable = True
+                if self.collisionRect.midright[0] <= sprite.collisionRect.centerx and \
+                                sprite.collisionRect.topleft[1] < self.collisionRect.midleft[1] \
+                                and self.collisionRect.midbottom[1] < sprite.collisionRect.bottomleft[1]:
+                    _rightEnable = False
+                else:
+                    _rightEnable = True
+            else:
+                _upEnable = True
+                _downEnable = True
+                _rightEnable = True
+                _leftEnable = True
+
+            _enableListUp.append(_upEnable)
+            _enableListDown.append(_downEnable)
+            _enableListRight.append(_rightEnable)
+            _enableListLeft.append(_leftEnable)
+
+            self.upEnable = all(_enableListUp)
+            self.downEnable = all(_enableListDown)
+            self.rightEnable = all(_enableListRight)
+            self.leftEnable = all(_enableListLeft)
 
 class Animation:
         def __init__(self, imgs, speed):

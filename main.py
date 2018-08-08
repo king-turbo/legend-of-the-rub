@@ -55,6 +55,9 @@ def movement(left,right,down,up):
         bg.screenMove('up')
 
 
+
+
+
 if __name__ == "__main__":
     pygame.init()
     # Constants
@@ -65,6 +68,7 @@ if __name__ == "__main__":
     zoom = 3
     heroSpeed = 6
 
+    modes = pygame.display.list_modes(16)
     gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), RESIZABLE)
     clk = pygame.time.Clock()
 

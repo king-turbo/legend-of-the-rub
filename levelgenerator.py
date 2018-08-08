@@ -116,6 +116,8 @@ class Background(pygame.sprite.Sprite):
         character.updateAnimation(left, right, up, down, mouseX, mouseY)
         for sprite in self.npcSpriteList:
             sprite.updateAnimation(gameDisplay)
+
+
         for sprite in self.envSpriteList + self.npcSpriteList:
             _a = (sprite.spriteHeight - 32) * self.zoom
             if sprite.y + _a < character.y:
@@ -123,9 +125,19 @@ class Background(pygame.sprite.Sprite):
             else:
                 _foreground.append(sprite)
             gameDisplay.blit(character.charImg, (character.x, character.y))
+
+        ##TODO: better drawing system
+
         for sprite in _foreground:
             gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
         self.detectCollision(character)
+
+        for i in range(len(self.npcSpriteList)):
+            if len(self.npcSpriteList) == 1 or len(self.npcSpriteList) == 0:
+                self.npcSpriteList[0].detectCollision(self.envSpriteList)
+            else:
+                self.npcSpriteList[i].detectCollision(self.envSpriteList + self.npcSpriteList[:i] + self.npcSpriteList[i+1:])
+
         if display_hitbox == True:
             pygame.draw.rect(gameDisplay, SOMECOLOR2, character.collisionRect)
             for sprite in self.envSpriteList + self.npcSpriteList:
@@ -145,3 +157,7 @@ class Background(pygame.sprite.Sprite):
     def updateAI(self, character):
         for sprite in self.npcSpriteList:
             sprite.BadAI(character)
+
+
+
+
