@@ -33,7 +33,7 @@ def mainLoop():
         up = keys[K_w]
         toggleHitBoxKey = keys[K_h]
 
-        movement(left,right,down,up)
+        bg.screenMove(left,right,up,down)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
 
         bg.spriteAttacks(mouse1, mouse1Release, mouseX, mouseY, character=character, gameDisplay=gameDisplay)
@@ -43,17 +43,6 @@ def mainLoop():
         pygame.display.flip()
         procTime = time.time() - tic
         clk.tick(FRAME_SPEED - procTime)
-
-def movement(left,right,down,up):
-    if left:
-        bg.screenMove('left')
-    if right:
-        bg.screenMove('right')
-    if down:
-        bg.screenMove('down')
-    if up:
-        bg.screenMove('up')
-
 
 
 

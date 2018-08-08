@@ -27,6 +27,9 @@ class EnvSprite(pygame.sprite.Sprite):
                                           self.collisionHeight + 10 + self.collisionoffsetY),
                                          (self.collisionWidth, self.collisionHeight))
 
+    def __lt__(self, other):
+        return self.y < other.y + (other.spriteHeight - 32) * self.zoom
+
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
 
@@ -66,6 +69,8 @@ class NPCSprite(pygame.sprite.Sprite):
         self.rightEnable = True
         self.leftEnable = True
 
+    def __lt__(self, other):
+        return self.y < other.y + (other.spriteHeight - 32) * self.zoom
 
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)

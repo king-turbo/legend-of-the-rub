@@ -3,7 +3,7 @@ from pygame.locals import *
 import os
 from npcs import PeonNPC
 from environmentsprites import Tree, Rock
-
+import math
 pygame.init()
 cwd = os.getcwd()
 
@@ -88,56 +88,64 @@ class Background(pygame.sprite.Sprite):
     def updateHeroSpeed(self):
         self.heroSpeed = self.character.heroSpeed
 
-    def screenMove(self, direction):
+    def screenMove(self, left, right, up, down):
+        _diag = 1
         self.updateHeroSpeed()
-        if direction == 'left' and self.leftEnable == True:
+        if left and self.leftEnable == True:
+            if up or down:
+                _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x += self.heroSpeed
-                sprite.updateCollisionBox(self.heroSpeed, 0)
+                sprite.x += self.heroSpeed / _diag
+                sprite.updateCollisionBox(self.heroSpeed / _diag, 0)
 
-        if direction == 'right' and self.rightEnable == True:
+        if right and self.rightEnable == True:
+            if up or down:
+                _diag = math.sqrt(2)
+                print(_diag)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x -= self.heroSpeed
-                sprite.updateCollisionBox(-self.heroSpeed, 0)
+                sprite.x -= self.heroSpeed / _diag
+                sprite.updateCollisionBox(-self.heroSpeed / _diag, 0)
 
-        if direction == 'up' and self.upEnable == True:
+        if up and self.upEnable == True:
+            if left or right:
+                _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y += self.heroSpeed
-                sprite.updateCollisionBox(0, self.heroSpeed)
+                sprite.y += self.heroSpeed / _diag
+                sprite.updateCollisionBox(0, self.heroSpeed / _diag)
 
-        if direction == 'down' and self.downEnable == True:
+        if down and self.downEnable == True:
+            if left or right:
+                _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y -= self.heroSpeed
-                sprite.updateCollisionBox(0, -self.heroSpeed)
+                sprite.y -= self.heroSpeed / _diag
+                sprite.updateCollisionBox(0, -self.heroSpeed / _diag)
 
     def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
-        _foreground = []
+
+
         self.updateAI(character)
         character.updateAnimation(left, right, up, down, mouseX, mouseY)
+        self.detectCollision(character)
+
+        #npc animation TODO
         for sprite in self.npcSpriteList:
             sprite.updateAnimation(gameDisplay)
 
-
-        for sprite in self.envSpriteList + self.npcSpriteList:
-            _a = (sprite.spriteHeight - 32) * self.zoom
-            if sprite.y + _a < character.y:
-                gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
-            else:
-                _foreground.append(sprite)
-            gameDisplay.blit(character.charImg, (character.x, character.y))
-
-        ##TODO: better drawing system
-
-        for sprite in _foreground:
+        #Draw order
+        a = self.envSpriteList + self.npcSpriteList
+        a.append(character)
+        a.sort()
+        for sprite in a:
             gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
-        self.detectCollision(character)
 
+        #NPC collision
         for i in range(len(self.npcSpriteList)):
             if len(self.npcSpriteList) == 1 or len(self.npcSpriteList) == 0:
                 self.npcSpriteList[0].detectCollision(self.envSpriteList)
             else:
                 self.npcSpriteList[i].detectCollision(self.envSpriteList + self.npcSpriteList[:i] + self.npcSpriteList[i+1:])
 
+        #Visual hitbox toggler
         if display_hitbox == True:
             pygame.draw.rect(gameDisplay, SOMECOLOR2, character.collisionRect)
             for sprite in self.envSpriteList + self.npcSpriteList:
