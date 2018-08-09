@@ -37,8 +37,6 @@ class Hero(pygame.sprite.Sprite):
 
     def updateAnimation(self, left, right, up, down, mouseX, mouseY):
 
-        mouse_buff = 50
-
         if left:
             self.walkLeftAnimation.update()
             self.img = self.walkLeftAnimation.img()
@@ -55,8 +53,6 @@ class Hero(pygame.sprite.Sprite):
             self.walkDownAnimation.update()
             self.img = self.walkDownAnimation.img()
             self.attackDirection = 'down'
-
-
         self.img = pygame.transform.scale(self.img, self.size)
 
     def detectAttack(self,mouse1Press, mouse1Release, mouseX, mouseY, display):

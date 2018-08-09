@@ -31,10 +31,10 @@ class Background(pygame.sprite.Sprite):
         self.spriteCollisionGroup = pygame.sprite.Group()
         for treeLoc in spriteDict['tree']:
             IDNum += 1
-            self.envSpriteList.append(Tree(treeLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT, IDNum))
+            self.envSpriteList.append(Tree(treeLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
         for bushLoc in spriteDict['bush']:
             IDNum += 1
-            self.envSpriteList.append(Bush(bushLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT, IDNum))
+            self.envSpriteList.append(Bush(bushLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
 
         for peonLoc in spriteDict['peon']:
             IDNum +=1
@@ -140,10 +140,12 @@ class Background(pygame.sprite.Sprite):
         #NPC collision
         for i in range(len(self.npcSpriteList)):
             if len(self.npcSpriteList) <= 1:
-                self.npcSpriteList[0].detectCollision(self.envSpriteList)
+                self.npcSpriteList[0].detectCollision(self.envSpriteList, character)
             elif len(self.npcSpriteList) > 1:
-                self.npcSpriteList[i].detectCollision(self.envSpriteList + self.npcSpriteList[:i] + self.npcSpriteList[i+1:])
+                self.npcSpriteList[i].detectCollision(self.envSpriteList + self.npcSpriteList[:i] + self.npcSpriteList[i+1:], character)
 
+        #NPC closest
+        # self.npcSpriteList.sort(key=lambda x: )
 
         #Visual hitbox toggler
         if display_hitbox == True:

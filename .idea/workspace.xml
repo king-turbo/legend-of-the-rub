@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ad3b0961-95cd-40ea-b11a-9c11382610ce" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/asdf1234.py" afterPath="$PROJECT_DIR$/asdf1234.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/environmentsprites.py" afterPath="$PROJECT_DIR$/environmentsprites.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/herosprite.py" afterPath="$PROJECT_DIR$/herosprite.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/levelgenerator.py" afterPath="$PROJECT_DIR$/levelgenerator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/npcs.py" afterPath="$PROJECT_DIR$/npcs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spritedefs.py" afterPath="$PROJECT_DIR$/spritedefs.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,11 +25,11 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+            <state relative-caret-position="952">
+              <caret line="56" column="12" lean-forward="true" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+                <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
               </folding>
             </state>
           </provider>
@@ -35,8 +38,8 @@
       <file leaf-file-name="levelgenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/levelgenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="45" column="29" lean-forward="false" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+            <state relative-caret-position="377">
+              <caret line="142" column="83" lean-forward="false" selection-start-line="142" selection-start-column="83" selection-end-line="142" selection-end-column="83" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -44,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="herosprite.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="herosprite.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/herosprite.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+            <state relative-caret-position="323">
+              <caret line="49" column="49" lean-forward="false" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -56,21 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asdf1234.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/asdf1234.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="spritedefs.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="spritedefs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spritedefs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3247">
-              <caret line="194" column="34" lean-forward="false" selection-start-line="194" selection-start-column="34" selection-end-line="194" selection-end-column="34" />
+            <state relative-caret-position="326">
+              <caret line="148" column="137" lean-forward="false" selection-start-line="148" selection-start-column="137" selection-end-line="148" selection-end-column="137" />
               <folding />
             </state>
           </provider>
@@ -79,8 +72,8 @@
       <file leaf-file-name="npcs.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/npcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+            <state relative-caret-position="264">
+              <caret line="27" column="8" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="26" />
               <folding>
                 <element signature="e#3#16#0" expanded="true" />
               </folding>
@@ -91,8 +84,8 @@
       <file leaf-file-name="environmentsprites.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/environmentsprites.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="31" />
+            <state relative-caret-position="272">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -164,13 +157,13 @@
         <option value="$PROJECT_DIR$/sprites/asdf1234.py" />
         <option value="$PROJECT_DIR$/mapeditor.py" />
         <option value="$PROJECT_DIR$/spritecolordefs.py" />
-        <option value="$PROJECT_DIR$/levelgenerator.py" />
-        <option value="$PROJECT_DIR$/environmentsprites.py" />
-        <option value="$PROJECT_DIR$/spritedefs.py" />
-        <option value="$PROJECT_DIR$/npcs.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/asdf1234.py" />
         <option value="$PROJECT_DIR$/herosprite.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/npcs.py" />
+        <option value="$PROJECT_DIR$/environmentsprites.py" />
+        <option value="$PROJECT_DIR$/levelgenerator.py" />
+        <option value="$PROJECT_DIR$/spritedefs.py" />
       </list>
     </option>
   </component>
@@ -196,7 +189,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -217,7 +210,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -461,13 +454,20 @@
       <option name="project" value="LOCAL" />
       <updated>1533771790501</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="removed some mouse control">
+      <created>1533774137530</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1533774137530</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17910448" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18443497" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2173913" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -562,7 +562,8 @@
     <MESSAGE value="dumb name fix" />
     <MESSAGE value="added a pause to collided NPCs so they don't eat each other. Added a spriteType and sprite ID thing that's a little bit dumb." />
     <MESSAGE value="added some very broken NPC animation" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some very broken NPC animation" />
+    <MESSAGE value="removed some mouse control" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed some mouse control" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -591,7 +592,7 @@
           <caret line="73" column="39" lean-forward="true" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -616,7 +617,7 @@
           <caret line="73" column="39" lean-forward="true" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -641,7 +642,7 @@
           <caret line="73" column="33" lean-forward="false" selection-start-line="73" selection-start-column="33" selection-end-line="73" selection-end-column="33" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -666,7 +667,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -691,7 +692,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -709,7 +710,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -727,7 +728,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -745,7 +746,7 @@
           <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -770,7 +771,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -781,7 +782,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -889,68 +890,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/levelgenerator.py">
+    <entry file="file://$PROJECT_DIR$/asdf1234.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="45" column="29" lean-forward="false" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="56" column="12" lean-forward="true" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+            <marker date="1533777094008" expanded="true" signature="2062:2146" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/environmentsprites.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spritedefs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3247">
-          <caret line="194" column="34" lean-forward="false" selection-start-line="194" selection-start-column="34" selection-end-line="194" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/npcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state relative-caret-position="264">
+          <caret line="27" column="8" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="26" />
           <folding>
             <element signature="e#3#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/environmentsprites.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1533774117729" expanded="true" signature="2036:2120" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/asdf1234.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="272">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/herosprite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        <state relative-caret-position="323">
+          <caret line="49" column="49" lean-forward="false" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/levelgenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="142" column="83" lean-forward="false" selection-start-line="142" selection-start-column="83" selection-end-line="142" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spritedefs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="148" column="137" lean-forward="false" selection-start-line="148" selection-start-column="137" selection-end-line="148" selection-end-column="137" />
+          <folding />
         </state>
       </provider>
     </entry>

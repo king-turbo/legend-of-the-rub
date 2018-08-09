@@ -63,18 +63,24 @@ class NPCSprite(pygame.sprite.Sprite):
 
         self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
                              int(self.spriteHeight / 2 * zoom) + 45]
+
+        self.spriteType = "NPC"
         self.direction = 'right'
         self.upEnable = True
         self.downEnable = True
         self.rightEnable = True
         self.leftEnable = True
+        self.frozenLeft = 0
+        self.frozenRight = 0
+        self.frozenUp = 0
+        self.frozenDown = 0
 
 
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
 
-    def __gt__(self,other):
-        return self.IDNum > other.IDNum
+    # def __gt__(self,other):
+    #     return self.IDNum > other.IDNum
 
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
@@ -109,6 +115,7 @@ class NPCSprite(pygame.sprite.Sprite):
             self.direction = 'left'
             self.x -= speed
             self.updateCollisionBox(-speed, 0)
+
         if character.x - self.x > 20 and self.rightEnable:
             self.direction = 'right'
             self.x += speed
@@ -123,7 +130,12 @@ class NPCSprite(pygame.sprite.Sprite):
             self.updateCollisionBox(0, -speed)
 
 
-    def detectCollision(self, spriteList):
+
+    def aiReroute(self):
+        pass
+
+
+    def detectCollision(self, spriteList, character):
 
         _enableListUp = []
         _enableListDown = []
@@ -133,12 +145,13 @@ class NPCSprite(pygame.sprite.Sprite):
         for sprite in spriteList:
             if self.collisionRect.colliderect(sprite.collisionRect):
 
-                if self > sprite and sprite.spriteType == "NPC":
-                    self.upEnable = False
-                    self.downEnable = False
-                    self.rightEnable = False
-                    self.leftEnable = False
-                    break
+                if  sprite.spriteType == "NPC":
+                    if (self.x - character.x)**2 + (self.y - character.y)**2  > (sprite.x - character.x)**2 + (sprite.y - character.y)**2:
+                        self.upEnable = False
+                        self.downEnable = False
+                        self.rightEnable = False
+                        self.leftEnable = False
+                        break
 
                 if self.collisionRect.midtop[1] >= sprite.collisionRect.centery and \
                                 sprite.collisionRect.bottomleft[0] <= self.collisionRect.midtop[0] \

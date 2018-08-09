@@ -27,7 +27,7 @@ class PeonNPC(NPCSprite):
         self.size = tuple([i * zoom for i in self.minusTen.get_rect().size])
         self.IDNum = IDNum
         self.hit = False
-        self.spriteType = "NPC"
+
         self.hitAnimaitonCounter = 0
         self.walkRightAnimation = Animation(chImg.walkRightArray, 5)
         self.walkLeftAnimation = Animation(chImg.walkLeftArray, 5)
@@ -37,6 +37,7 @@ class PeonNPC(NPCSprite):
 
 
     def updateAnimation(self, display):
+
         if self.hit:
             self.hitAnimaitonCounter += 1
             display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter * 2))
@@ -46,16 +47,20 @@ class PeonNPC(NPCSprite):
                 self.hit = False
 
         if self.direction == 'up':
-            self.walkUpAnimation.update()
+            if self.upEnable == True:
+                self.walkUpAnimation.update()
             self.img = self.walkUpAnimation.img()
         if self.direction == 'down':
-            self.walkDownAnimation.update()
+            if self.downEnable == True:
+                self.walkDownAnimation.update()
             self.img = self.walkDownAnimation.img()
         if self.direction == 'right':
-            self.walkRightAnimation.update()
+            if self.rightEnable == True:
+                self.walkRightAnimation.update()
             self.img = self.walkRightAnimation.img()
         if self.direction == 'left':
-            self.walkLeftAnimation.update()
+            if self.leftEnable == True:
+                self.walkLeftAnimation.update()
             self.img = self.walkLeftAnimation.img()
 
         self.img = pygame.transform.scale(self.img, self.size)
