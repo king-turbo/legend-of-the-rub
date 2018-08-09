@@ -1,6 +1,26 @@
+import pygame
+import os
+
+
+cwd = os.getcwd()
+
+
+class buttP:
+    b = []
+    a = [os.path.join(cwd,'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep1.png'),
+                          os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep2.png'),
+                          os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep3.png'),
+                          os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep4.png')]
+    for i in range(len(a)):
+        b.append(pygame.image.load(a[i]))
 
 
 
+
+print(buttP.b)
+
+
+# pygame.image.load(
     # if not (left or right or up or down):
     #     if mouseX > self.x + mouse_buff:
     #         self.img = self.walkRightAnimation.idlePos

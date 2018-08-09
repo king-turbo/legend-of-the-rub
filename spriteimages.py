@@ -1,26 +1,49 @@
 import os
-
+import pygame
 cwd = os.getcwd()
 
 
+
 class CharacterImgs:
-    walkRightArray = [os.path.join(cwd,'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep1.png'),
+    walkRightArray = []
+    walkLeftArray = []
+    walkUpArray = []
+    walkDownArray = []
+    standing = []
+    walkRightArrayDir = [os.path.join(cwd,'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep1.png'),
                       os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep2.png'),
                       os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep3.png'),
                       os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-right-longstep4.png')]
 
-    walkLeftArray = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep1.png'),
+    for img in walkRightArrayDir:
+        walkRightArray.append(pygame.image.load(img))
+
+    walkLeftArrayDir = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep1.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep2.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep3.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep4.png')]
 
-    walkUpArray = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-up1.png'),
+    for img in walkLeftArrayDir:
+        walkLeftArray.append(pygame.image.load(img))
+
+    walkUpArrayDir = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-up1.png'),
                    os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-up2.png')]
 
-    walkDownArray = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-down1.png'),
+    for img in walkUpArrayDir:
+        walkUpArray.append(pygame.image.load(img))
+
+    walkDownArrayDir = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-down1.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-down2.png')]
 
-    standing = os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'pixelman.png')
+    for img in walkDownArrayDir:
+        walkDownArray.append(pygame.image.load(img))
+
+    standingDir = os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'pixelman.png')
+
+    standing = pygame.image.load(standingDir)
+
+
+
 
 
 class WeaponImages:

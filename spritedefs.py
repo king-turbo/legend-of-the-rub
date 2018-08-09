@@ -65,11 +65,15 @@ class NPCSprite(pygame.sprite.Sprite):
                              int(self.spriteHeight / 2 * zoom) + 45]
 
         self.spriteType = "NPC"
-        self.direction = 'right'
         self.upEnable = True
         self.downEnable = True
         self.rightEnable = True
         self.leftEnable = True
+        self.left = False
+        self.right = False
+        self.up = False
+        self.down = False
+
         self.frozenLeft = 0
         self.frozenRight = 0
         self.frozenUp = 0
@@ -108,26 +112,33 @@ class NPCSprite(pygame.sprite.Sprite):
                     self.health -= 10
                     self.hit = True
 
-    def badAI(self, character):
+    def meleeAI(self, character):
         speed = 2
 
-        if character.x - self.x < 20 and self.leftEnable:
-            self.direction = 'left'
+        if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
+            self.left = True
             self.x -= speed
             self.updateCollisionBox(-speed, 0)
-
-        if character.x - self.x > 20 and self.rightEnable:
-            self.direction = 'right'
+        else:
+            self.left = False
+        if character.collisionRect.centerx > self.collisionRect.centerx and self.rightEnable:
+            self.right = True
             self.x += speed
             self.updateCollisionBox(speed, 0)
-        if character.y - self.y > 20 and self.downEnable:
-            self.direction = 'down'
+        else:
+            self.right = False
+        if character.collisionRect.centery > self.collisionRect.centery  and self.downEnable:
+            self.down = True
             self.y += speed
             self.updateCollisionBox(0, speed)
-        if character.y - self.y < 20 and self.upEnable:
-            self.direction = 'up'
+        else:
+            self.down = False
+        if character.collisionRect.centery < self.collisionRect.centery  and self.upEnable:
+            self.up = True
             self.y -= speed
             self.updateCollisionBox(0, -speed)
+        else:
+            self.up = False
 
 
 
@@ -143,8 +154,15 @@ class NPCSprite(pygame.sprite.Sprite):
         _enableListLeft = []
 
         for sprite in spriteList:
-            if self.collisionRect.colliderect(sprite.collisionRect):
+            if self.collisionRect.colliderect(character.collisionRect):
+                self.upEnable = False
+                self.downEnable = False
+                self.rightEnable = False
+                self.leftEnable = False
+                break
 
+            #TODO: may have to move this when NPCs can use both ranged and melee attacks
+            if self.collisionRect.colliderect(sprite.collisionRect):
                 if  sprite.spriteType == "NPC":
                     if (self.x - character.x)**2 + (self.y - character.y)**2  > (sprite.x - character.x)**2 + (sprite.y - character.y)**2:
                         self.upEnable = False
@@ -196,12 +214,14 @@ class NPCSprite(pygame.sprite.Sprite):
 
 class Animation:
         def __init__(self, imgs, speed):
-            self.imgs = imgs
+            self.imgs = []
+            for img in imgs:
+                self.imgs.append(img.convert_alpha())
             self.speed = speed
             self.counter = 0
             self.clkDividedCount = 0
-            self.idlePos = pygame.image.load(imgs[0]).convert_alpha()
-            self.currentImg = pygame.image.load(self.imgs[0]).convert_alpha()
+            self.idlePos = imgs[0].convert_alpha()
+            self.currentImg = self.imgs[0].convert_alpha()
             #TODO: come up with better way decide idle poistions
 
 
@@ -215,7 +235,7 @@ class Animation:
                 self.counter = 0
             if self.clkDividedCount >= len(self.imgs):
                 self.clkDividedCount = 0
-            self.currentImg = pygame.image.load(self.imgs[self.clkDividedCount * _bw]).convert_alpha()
+            self.currentImg = self.imgs[self.clkDividedCount * _bw]
             self.counter += 1
 
         def img(self):

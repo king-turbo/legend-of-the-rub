@@ -124,12 +124,13 @@ class Background(pygame.sprite.Sprite):
 
     def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
         self.updateAI(character)
-        character.updateAnimation(left, right, up, down, mouseX, mouseY)
+        character.updateAnimation(left, right, up, down)
         self.detectCollision(character)
 
-        #npc animation TODO
+        #npc animation
         for sprite in self.npcSpriteList:
             sprite.updateAnimation(gameDisplay)
+
         #Draw order
         _a = self.envSpriteList + self.npcSpriteList
         _a.append(character)
@@ -144,8 +145,6 @@ class Background(pygame.sprite.Sprite):
             elif len(self.npcSpriteList) > 1:
                 self.npcSpriteList[i].detectCollision(self.envSpriteList + self.npcSpriteList[:i] + self.npcSpriteList[i+1:], character)
 
-        #NPC closest
-        # self.npcSpriteList.sort(key=lambda x: )
 
         #Visual hitbox toggler
         if display_hitbox == True:
@@ -164,7 +163,7 @@ class Background(pygame.sprite.Sprite):
 
     def updateAI(self, character):
         for sprite in self.npcSpriteList:
-            sprite.badAI(character)
+            sprite.meleeAI(character)
 
 
 
