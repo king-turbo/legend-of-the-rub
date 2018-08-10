@@ -2,6 +2,7 @@ import pygame
 import time
 import random
 from pygame.locals import *
+from random import randint
 
 
 class EnvSprite(pygame.sprite.Sprite):
@@ -17,6 +18,7 @@ class EnvSprite(pygame.sprite.Sprite):
         self.zoom = zoom
         self.x = coords[0]
         self.y = coords[1]
+        self.spriteType = "Env"
         self.rect = self.img.get_rect()
         self.collisionWidth = collisionWidth
         self.collisionHeight = collisionHeight
@@ -26,6 +28,7 @@ class EnvSprite(pygame.sprite.Sprite):
                                           self.collisionoffsetX, self.y + (self.spriteHeight) * zoom -
                                           self.collisionHeight + 10 + self.collisionoffsetY),
                                          (self.collisionWidth, self.collisionHeight))
+
 
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
@@ -79,7 +82,15 @@ class NPCSprite(pygame.sprite.Sprite):
         self.frozenUp = 0
         self.frozenDown = 0
         self.blocking = False
+        self.reroutCounter = 0
+        self.reroutFlag = False
 
+        self.rerouteUp = False
+        self.rerouteDown = False
+        self.rerouteRight = False
+        self.rerouteLeft = False
+
+        self.npcPatience = randint(10,20)
 
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
@@ -115,7 +126,10 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def meleeAI(self, character):
         speed = 2
-        if not self.blocking:
+
+        self.aiReroute(character)
+
+        if not self.blocking and not self.reroutFlag:# and self.rerouteUp == False: #and not self.reroutFlag:
             if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
                 self.left = True
                 self.x -= speed
@@ -148,8 +162,89 @@ class NPCSprite(pygame.sprite.Sprite):
 
 
 
-    def aiReroute(self):
-        pass
+    def aiReroute(self, character):
+        speed = 2
+
+
+        if self.frozenLeft > self.npcPatience:
+            if self.upEnable:
+                self.up = True
+                self.down = False
+                self.y -= speed
+                self.updateCollisionBox(0, -speed)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.rightEnable:
+                self.right = True
+                self.x += speed
+                self.updateCollisionBox(speed, 0)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.reroutFlag == True:
+                self.reroutCounter += 1
+
+
+        if self.frozenRight > self.npcPatience:
+            if self.downEnable:
+                self.up = False
+                self.down = True
+                self.y += speed
+                self.updateCollisionBox(0, speed)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.leftEnable:
+                self.left = True
+                self.right = False
+                self.x -= speed
+                self.updateCollisionBox(-speed, 0)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.reroutFlag == True:
+                self.reroutCounter += 1
+
+        if self.frozenUp > self.npcPatience:
+            if self.leftEnable:
+                self.left = True
+                self.right = False
+                self.x -= speed
+                self.updateCollisionBox(-speed, 0)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.downEnable:
+                self.up = False
+                self.down = True
+                self.y += speed
+                self.updateCollisionBox(0, speed)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.reroutFlag == True:
+                self.reroutCounter += 1
+
+        if self.frozenDown > self.npcPatience:
+            if self.rightEnable:
+                self.right = True
+                self.x += speed
+                self.updateCollisionBox(speed, 0)
+                self.reroutFlag = True
+                self.reroutCounter += 1
+            elif self.upEnable:
+                self.up = True
+                self.down = False
+                self.y -= speed
+                self.updateCollisionBox(0, -speed)
+                self.reroutFlag = True
+            elif self.reroutFlag == True:
+                self.reroutCounter += 1
+
+        if self.reroutCounter >= 30:
+            self.reroutCounter = 0
+            self.reroutFlag = False
+            self.frozenLeft = 0
+            self.frozenRight = 0
+            self.frozenUp = 0
+            self.frozenDown = 0
+
+
 
 
     def detectCollision(self, spriteList, character):
@@ -165,52 +260,37 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.downEnable = False
                 self.rightEnable = False
                 self.leftEnable = False
+                self.frozenLeft = 0
+                self.frozenRight = 0
+                self.frozenUp = 0
+                self.frozenDown = 0
                 break
 
             #TODO: may have to move this when NPCs can use both ranged and melee attacks
             if self.collisionRect.colliderect(sprite.collisionRect):
-
-
-
-                if self.collisionRect.midtop[1] >= sprite.collisionRect.centery and \
-                                sprite.collisionRect.bottomleft[0] <= self.collisionRect.midtop[0] \
-                                and self.collisionRect.midtop[0] <= sprite.collisionRect.bottomright[0]:
+                if sprite.collisionRect.collidepoint(self.collisionRect.midtop):
                     _upEnable = False
                 else:
                     _upEnable = True
-                if self.collisionRect.midtop[1] <= sprite.collisionRect.centery and \
-                                sprite.collisionRect.topleft[0] <= self.collisionRect.midbottom[0]\
-                                and self.collisionRect.midbottom[0] <= sprite.collisionRect.topright[0]:
-                    _downEnable = False
-                else:
-                    _downEnable = True
-                if self.collisionRect.midleft[0] >= sprite.collisionRect.centerx and \
-                                sprite.collisionRect.topright[1] <= self.collisionRect.midleft[1]\
-                                and self.collisionRect.midbottom[1] <=  sprite.collisionRect.bottomright[1]:
+                if sprite.collisionRect.collidepoint(self.collisionRect.midleft):
                     _leftEnable = False
-                    print("wsd")
                 else:
                     _leftEnable = True
-                if self.collisionRect.midright[0] <= sprite.collisionRect.centerx and \
-                                sprite.collisionRect.topleft[1] <= self.collisionRect.midleft[1] \
-                                and self.collisionRect.midbottom[1] <= sprite.collisionRect.bottomleft[1]:
+                if sprite.collisionRect.collidepoint(self.collisionRect.midright):
                     _rightEnable = False
                 else:
                     _rightEnable = True
+                if sprite.collisionRect.collidepoint(self.collisionRect.midbottom):
+                    _downEnable = False
+                else:
+                    _downEnable = True
 
-                if  sprite.spriteType == "NPC":
-                    if (self.x - character.x)**2 + (self.y - character.y)**2  > (sprite.x - character.x)**2 + (sprite.y - character.y)**2:
-                        self.blocking = True
-                        # self.upEnable = False
-                        # self.downEnable = False
-                        # self.rightEnable = False
-                        # self.leftEnable = False
-                        break
             else:
                 _upEnable = True
                 _downEnable = True
                 _rightEnable = True
                 _leftEnable = True
+
 
             _enableListUp.append(_upEnable)
             _enableListDown.append(_downEnable)
@@ -222,10 +302,18 @@ class NPCSprite(pygame.sprite.Sprite):
             self.rightEnable = all(_enableListRight)
             self.leftEnable = all(_enableListLeft)
 
+            if self.upEnable == False:
+                self.frozenUp += 1
+            if self.downEnable == False:
+                self.frozenDown += 1
+            if self.rightEnable == False:
+                self.frozenRight += 1
+            if self.leftEnable == False:
+                self.frozenLeft += 1
 
 
-            if all([self.upEnable,self.downEnable,self.rightEnable,self.leftEnable]):
-                self.blocking = False
+
+
 
 
 
