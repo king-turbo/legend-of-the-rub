@@ -37,8 +37,7 @@ class Hero(pygame.sprite.Sprite):
 
     def updateAnimation(self, left, right, up, down):
 
-
-        #TODO get this perfect
+        #TODO get this right
         if left and right:
             return
         elif up and down:

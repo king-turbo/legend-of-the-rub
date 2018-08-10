@@ -78,6 +78,7 @@ class NPCSprite(pygame.sprite.Sprite):
         self.frozenRight = 0
         self.frozenUp = 0
         self.frozenDown = 0
+        self.blocking = False
 
 
     def __lt__(self, other):
@@ -114,31 +115,36 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def meleeAI(self, character):
         speed = 2
-
-        if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
-            self.left = True
-            self.x -= speed
-            self.updateCollisionBox(-speed, 0)
-        else:
-            self.left = False
-        if character.collisionRect.centerx > self.collisionRect.centerx and self.rightEnable:
-            self.right = True
-            self.x += speed
-            self.updateCollisionBox(speed, 0)
-        else:
-            self.right = False
-        if character.collisionRect.centery > self.collisionRect.centery  and self.downEnable:
-            self.down = True
-            self.y += speed
-            self.updateCollisionBox(0, speed)
-        else:
-            self.down = False
-        if character.collisionRect.centery < self.collisionRect.centery  and self.upEnable:
-            self.up = True
-            self.y -= speed
-            self.updateCollisionBox(0, -speed)
+        if not self.blocking:
+            if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
+                self.left = True
+                self.x -= speed
+                self.updateCollisionBox(-speed, 0)
+            else:
+                self.left = False
+            if character.collisionRect.centerx > self.collisionRect.centerx and self.rightEnable:
+                self.right = True
+                self.x += speed
+                self.updateCollisionBox(speed, 0)
+            else:
+                self.right = False
+            if character.collisionRect.centery > self.collisionRect.centery  and self.downEnable:
+                self.down = True
+                self.y += speed
+                self.updateCollisionBox(0, speed)
+            else:
+                self.down = False
+            if character.collisionRect.centery < self.collisionRect.centery  and self.upEnable:
+                self.up = True
+                self.y -= speed
+                self.updateCollisionBox(0, -speed)
+            else:
+                self.up = False
         else:
             self.up = False
+            self.down = False
+            self.right = False
+            self.left = False
 
 
 
@@ -163,13 +169,8 @@ class NPCSprite(pygame.sprite.Sprite):
 
             #TODO: may have to move this when NPCs can use both ranged and melee attacks
             if self.collisionRect.colliderect(sprite.collisionRect):
-                if  sprite.spriteType == "NPC":
-                    if (self.x - character.x)**2 + (self.y - character.y)**2  > (sprite.x - character.x)**2 + (sprite.y - character.y)**2:
-                        self.upEnable = False
-                        self.downEnable = False
-                        self.rightEnable = False
-                        self.leftEnable = False
-                        break
+
+
 
                 if self.collisionRect.midtop[1] >= sprite.collisionRect.centery and \
                                 sprite.collisionRect.bottomleft[0] <= self.collisionRect.midtop[0] \
@@ -187,6 +188,7 @@ class NPCSprite(pygame.sprite.Sprite):
                                 sprite.collisionRect.topright[1] <= self.collisionRect.midleft[1]\
                                 and self.collisionRect.midbottom[1] <=  sprite.collisionRect.bottomright[1]:
                     _leftEnable = False
+                    print("wsd")
                 else:
                     _leftEnable = True
                 if self.collisionRect.midright[0] <= sprite.collisionRect.centerx and \
@@ -195,6 +197,15 @@ class NPCSprite(pygame.sprite.Sprite):
                     _rightEnable = False
                 else:
                     _rightEnable = True
+
+                if  sprite.spriteType == "NPC":
+                    if (self.x - character.x)**2 + (self.y - character.y)**2  > (sprite.x - character.x)**2 + (sprite.y - character.y)**2:
+                        self.blocking = True
+                        # self.upEnable = False
+                        # self.downEnable = False
+                        # self.rightEnable = False
+                        # self.leftEnable = False
+                        break
             else:
                 _upEnable = True
                 _downEnable = True
@@ -210,6 +221,12 @@ class NPCSprite(pygame.sprite.Sprite):
             self.downEnable = all(_enableListDown)
             self.rightEnable = all(_enableListRight)
             self.leftEnable = all(_enableListLeft)
+
+
+
+            if all([self.upEnable,self.downEnable,self.rightEnable,self.leftEnable]):
+                self.blocking = False
+
 
 
 class Animation:

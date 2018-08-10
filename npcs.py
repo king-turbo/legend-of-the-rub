@@ -16,7 +16,7 @@ from spritedefs import Animation
 
 class PeonNPC(NPCSprite):
 
-    def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, IDNum):
+    def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, IDNum, bg):
         collisionWidth = 48
         collisionHeight = 30
         attackWidth = 48
@@ -42,6 +42,7 @@ class PeonNPC(NPCSprite):
 
     def updateAnimation(self, display):
 
+        #TODO: make all the hit stuff better
         if self.hit:
             self.hitAnimaitonCounter += 1
             display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter * 2))
@@ -49,7 +50,6 @@ class PeonNPC(NPCSprite):
             if self.hitAnimaitonCounter == 10:
                 self.hitAnimaitonCounter = 0
                 self.hit = False
-
 
         if self.right:
             if self.rightEnable == True:

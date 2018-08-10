@@ -36,15 +36,13 @@ def mainLoop():
         bg.screenMove(left,right,up,down)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
 
-        bg.spriteAttacks(mouse1, mouse1Release, mouseX, mouseY, character=character, gameDisplay=gameDisplay)
-        bg.updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox, character=character,
-                         gameDisplay=gameDisplay)
+        bg.spriteAttacks(mouse1, mouse1Release, mouseX, mouseY, character)
+        bg.updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox, character)
 
         pygame.display.flip()
         procTime = time.time() - tic
         # print(procTime)
         clk.tick(FRAME_SPEED - procTime)
-
 
 
 if __name__ == "__main__":
@@ -62,7 +60,7 @@ if __name__ == "__main__":
     clk = pygame.time.Clock()
 
     character = Hero(heroSpeed, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
-    bg = Background(zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character)
+    bg = Background(zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character, gameDisplay)
     # map = mapeditor.Map(maps.treecode)
     # map = mapeditor.Map(maps.treecode1)
     map = mapeditor.Map(maps.twodudes)

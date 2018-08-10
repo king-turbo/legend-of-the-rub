@@ -11,7 +11,7 @@ SOMECOLOR2 = (32, 51, 11)
 SOMECOLOR = (124, 10, 55)
 
 class Background(pygame.sprite.Sprite):
-    def __init__(self, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character):
+    def __init__(self, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character, gameDisplay):
         pygame.sprite.Sprite.__init__(self)
         self.envSpriteList = []
         self.npcSpriteList = []
@@ -24,6 +24,7 @@ class Background(pygame.sprite.Sprite):
         self.downEnable = True
         self.character = character
         self.heroSpeed = self.character.heroSpeed
+        self.gameDisplay = gameDisplay
 
 
     def addSprites(self, spriteDict):
@@ -38,7 +39,7 @@ class Background(pygame.sprite.Sprite):
 
         for peonLoc in spriteDict['peon']:
             IDNum +=1
-            self.npcSpriteList.append(PeonNPC(peonLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT, IDNum))
+            self.npcSpriteList.append(PeonNPC(peonLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT, IDNum, self.gameDisplay))
 
     def detectCollision(self, collidedSprite):
         _enableListUp = []
@@ -122,21 +123,21 @@ class Background(pygame.sprite.Sprite):
                 sprite.y -= self.heroSpeed / _diag
                 sprite.updateCollisionBox(0, -self.heroSpeed / _diag)
 
-    def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character, gameDisplay):
+    def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character):
         self.updateAI(character)
         character.updateAnimation(left, right, up, down)
         self.detectCollision(character)
 
         #npc animation
         for sprite in self.npcSpriteList:
-            sprite.updateAnimation(gameDisplay)
+            sprite.updateAnimation(self.gameDisplay)
 
         #Draw order
         _a = self.envSpriteList + self.npcSpriteList
         _a.append(character)
         _a.sort()
         for sprite in _a:
-            gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+            self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
 
         #NPC collision
         for i in range(len(self.npcSpriteList)):
@@ -148,16 +149,16 @@ class Background(pygame.sprite.Sprite):
 
         #Visual hitbox toggler
         if display_hitbox == True:
-            pygame.draw.rect(gameDisplay, SOMECOLOR2, character.collisionRect)
+            pygame.draw.rect(self.gameDisplay, SOMECOLOR2, character.collisionRect)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                pygame.draw.rect(gameDisplay, SOMECOLOR, sprite.collisionRect)
-            for sprite in self.npcSpriteList:
-                pygame.draw.rect(gameDisplay,SOMECOLOR2,sprite.attackRect)
-                # pygame.draw.circle(gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
+                pygame.draw.rect(self.gameDisplay, SOMECOLOR, sprite.collisionRect, 2)
+            # for sprite in self.npcSpriteList:
+            #     pygame.draw.rect(self.gameDisplay,SOMECOLOR2,sprite.attackRect)
+                # pygame.draw.circle(self.gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
 
 
-    def spriteAttacks(self,mouse1Press, mouse1Release, mouseX, mouseY, character, gameDisplay):
-        meeleeCoolDown = character.detectAttack(mouse1Press, mouse1Release, mouseX, mouseY, gameDisplay)
+    def spriteAttacks(self,mouse1Press, mouse1Release, mouseX, mouseY, character):
+        meeleeCoolDown = character.detectAttack(mouse1Press, mouse1Release, mouseX, mouseY, self.gameDisplay)
         for sprite in self.npcSpriteList:
             sprite.detectDefend(mouse1Release, mouseX, mouseY, meeleeCoolDown,character)
 

@@ -18,6 +18,7 @@ class CharacterImgs:
     for img in walkRightArrayDir:
         walkRightArray.append(pygame.image.load(img))
 
+
     walkLeftArrayDir = [os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep1.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep2.png'),
                      os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'mike-walk-left-longstep3.png'),
@@ -41,9 +42,6 @@ class CharacterImgs:
     standingDir = os.path.join(cwd, 'sprites', 'character', 'walkingstanding', 'pixelman.png')
 
     standing = pygame.image.load(standingDir)
-
-
-
 
 
 class WeaponImages:
