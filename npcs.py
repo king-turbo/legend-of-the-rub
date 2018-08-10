@@ -52,19 +52,19 @@ class PeonNPC(NPCSprite):
                 self.hit = False
 
         if self.right:
-            if self.rightEnable == True:
+            if self.rightEnable:
                 self.walkRightAnimation.update()
             self.img = self.walkRightAnimation.img()
         elif self.left:
-            if self.leftEnable == True:
+            if self.leftEnable:
                 self.walkLeftAnimation.update()
             self.img = self.walkLeftAnimation.img()
         elif self.up:
-            if self.upEnable == True:
+            if self.upEnable:
                 self.walkUpAnimation.update()
             self.img = self.walkUpAnimation.img()
         elif self.down:
-            if self.downEnable == True:
+            if self.downEnable:
                 self.walkDownAnimation.update()
             self.img = self.walkDownAnimation.img()
 

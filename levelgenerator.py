@@ -148,7 +148,7 @@ class Background(pygame.sprite.Sprite):
 
 
         #Visual hitbox toggler
-        if display_hitbox == True:
+        if display_hitbox:
             pygame.draw.rect(self.gameDisplay, SOMECOLOR2, character.collisionRect)
             for sprite in self.envSpriteList + self.npcSpriteList:
                 pygame.draw.rect(self.gameDisplay, SOMECOLOR, sprite.collisionRect, 2)
@@ -164,7 +164,7 @@ class Background(pygame.sprite.Sprite):
 
     def updateAI(self, character):
         for sprite in self.npcSpriteList:
-            sprite.meleeAI(character)
+            sprite.npcAI(character)
 
 
 

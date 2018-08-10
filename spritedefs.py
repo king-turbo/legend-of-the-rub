@@ -91,6 +91,7 @@ class NPCSprite(pygame.sprite.Sprite):
         self.rerouteLeft = False
 
         self.npcPatience = randint(10,20)
+        self.mode = 'engage'
 
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
@@ -124,11 +125,29 @@ class NPCSprite(pygame.sprite.Sprite):
                     self.health -= 10
                     self.hit = True
 
-    def meleeAI(self, character):
+
+    def npcAI(self, character):
+
+
+
+        if self.mode == 'loiter':
+            self.npcLoiterAI(character)
+        if self.mode == 'engage':
+            self.npcEngageAI(character)
+        if self.mode == 'attack':
+            self.npcAttackAI(character)
+
+    def npcAttackAI(self, character):
+        print("we're attacking")
+
+
+    def npcLoiterAI(self, character):
+        pass
+
+    def npcEngageAI(self, character):
         speed = 2
 
         self.aiReroute(character)
-        print(self.blocking, self.reroutFlag)
         if not self.blocking and not self.reroutFlag:# and self.rerouteUp == False: #and not self.reroutFlag:
             if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
                 self.left = True
@@ -179,9 +198,8 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.updateCollisionBox(speed, 0)
                 self.reroutFlag = True
                 self.reroutCounter += 1
-            elif self.reroutFlag == True:
+            elif self.reroutFlag:
                 self.reroutCounter += 1
-
 
         if self.frozenRight > self.npcPatience:
             if self.downEnable:
@@ -198,7 +216,7 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.updateCollisionBox(-speed, 0)
                 self.reroutFlag = True
                 self.reroutCounter += 1
-            elif self.reroutFlag == True:
+            elif self.reroutFlag:
                 self.reroutCounter += 1
 
         if self.frozenUp > self.npcPatience:
@@ -216,7 +234,7 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.updateCollisionBox(0, speed)
                 self.reroutFlag = True
                 self.reroutCounter += 1
-            elif self.reroutFlag == True:
+            elif self.reroutFlag:
                 self.reroutCounter += 1
 
         if self.frozenDown > self.npcPatience:
@@ -232,7 +250,7 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.y -= speed
                 self.updateCollisionBox(0, -speed)
                 self.reroutFlag = True
-            elif self.reroutFlag == True:
+            elif self.reroutFlag:
                 self.reroutCounter += 1
 
         if self.reroutCounter >= 30:
@@ -247,10 +265,6 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.frozenUp = self.npcPatience - 1
             if self.frozenDown >= self.npcPatience:
                 self.frozenDown = self.npcPatience - 1
-
-
-
-
 
 
     def detectCollision(self, spriteList, character):
@@ -270,6 +284,7 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.frozenRight = 0
                 self.frozenUp = 0
                 self.frozenDown = 0
+                self.mode = 'attack'
                 break
 
             #TODO: may have to move this when NPCs can use both ranged and melee attacks
@@ -308,24 +323,24 @@ class NPCSprite(pygame.sprite.Sprite):
             self.rightEnable = all(_enableListRight)
             self.leftEnable = all(_enableListLeft)
 
-            if self.upEnable == False:
+            if not self.upEnable:
                 self.frozenUp += 1
-            elif self.reroutFlag == False:
+            elif not self.reroutFlag:
                 self.frozenUp = 0
 
-            if self.downEnable == False:
+            if not self.downEnable:
                 self.frozenDown += 1
-            elif self.reroutFlag == False:
+            elif not self.reroutFlag:
                 self.frozenUp = 0
 
-            if self.rightEnable == False:
+            if not self.rightEnable:
                 self.frozenRight += 1
-            elif self.reroutFlag == False:
+            elif not self.reroutFlag:
                 self.frozenRight = 0
 
-            if self.leftEnable == False:
+            if not self.leftEnable:
                 self.frozenLeft += 1
-            elif self.reroutFlag == False:
+            elif not self.reroutFlag:
                 self.frozenLeft = 0
 
             # print(self.frozenRight, self.frozenLeft, self.frozenUp, self.frozenDown)
