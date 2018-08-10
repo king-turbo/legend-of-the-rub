@@ -128,7 +128,7 @@ class NPCSprite(pygame.sprite.Sprite):
         speed = 2
 
         self.aiReroute(character)
-
+        print(self.blocking, self.reroutFlag)
         if not self.blocking and not self.reroutFlag:# and self.rerouteUp == False: #and not self.reroutFlag:
             if character.collisionRect.centerx < self.collisionRect.centerx and self.leftEnable:
                 self.left = True
@@ -164,7 +164,6 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def aiReroute(self, character):
         speed = 2
-
 
         if self.frozenLeft > self.npcPatience:
             if self.upEnable:
@@ -239,10 +238,17 @@ class NPCSprite(pygame.sprite.Sprite):
         if self.reroutCounter >= 30:
             self.reroutCounter = 0
             self.reroutFlag = False
-            self.frozenLeft = 0
-            self.frozenRight = 0
-            self.frozenUp = 0
-            self.frozenDown = 0
+
+            if self.frozenLeft >= self.npcPatience:
+                self.frozenLeft = self.npcPatience - 1
+            if self.frozenRight >= self.npcPatience:
+                self.frozenRight = self.npcPatience - 1
+            if self.frozenUp >= self.npcPatience:
+                self.frozenUp = self.npcPatience - 1
+            if self.frozenDown >= self.npcPatience:
+                self.frozenDown = self.npcPatience - 1
+
+
 
 
 
@@ -304,14 +310,25 @@ class NPCSprite(pygame.sprite.Sprite):
 
             if self.upEnable == False:
                 self.frozenUp += 1
+            elif self.reroutFlag == False:
+                self.frozenUp = 0
+
             if self.downEnable == False:
                 self.frozenDown += 1
+            elif self.reroutFlag == False:
+                self.frozenUp = 0
+
             if self.rightEnable == False:
                 self.frozenRight += 1
+            elif self.reroutFlag == False:
+                self.frozenRight = 0
+
             if self.leftEnable == False:
                 self.frozenLeft += 1
+            elif self.reroutFlag == False:
+                self.frozenLeft = 0
 
-
+            # print(self.frozenRight, self.frozenLeft, self.frozenUp, self.frozenDown)
 
 
 

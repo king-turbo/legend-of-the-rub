@@ -99,29 +99,29 @@ class Background(pygame.sprite.Sprite):
             if up or down:
                 _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x += self.heroSpeed / _diag
-                sprite.updateCollisionBox(self.heroSpeed / _diag, 0)
+                sprite.x += int(self.heroSpeed / _diag)
+                sprite.updateCollisionBox(int(self.heroSpeed / _diag), 0)
 
         if right and self.rightEnable == True:
             if up or down:
                 _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.x -= self.heroSpeed / _diag
-                sprite.updateCollisionBox(-self.heroSpeed / _diag, 0)
+                sprite.x -= int(self.heroSpeed / _diag)
+                sprite.updateCollisionBox(int(-self.heroSpeed / _diag), 0)
 
         if up and self.upEnable == True:
             if left or right:
                 _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y += self.heroSpeed / _diag
-                sprite.updateCollisionBox(0, self.heroSpeed / _diag)
+                sprite.y += int(self.heroSpeed / _diag)
+                sprite.updateCollisionBox(0, int(self.heroSpeed / _diag))
 
         if down and self.downEnable == True:
             if left or right:
                 _diag = math.sqrt(2)
             for sprite in self.envSpriteList + self.npcSpriteList:
-                sprite.y -= self.heroSpeed / _diag
-                sprite.updateCollisionBox(0, -self.heroSpeed / _diag)
+                sprite.y -= int(self.heroSpeed / _diag)
+                sprite.updateCollisionBox(0, int(-self.heroSpeed / _diag))
 
     def updateSprites(self, left, right, up, down, mouseX, mouseY, display_hitbox, character):
         self.updateAI(character)
