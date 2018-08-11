@@ -161,7 +161,7 @@ class NPCSprite(pygame.sprite.Sprite):
             self.mode = 'meelecooldown'
             self.display.blit(self.swordImg[1], (self.x - 20, self.y - 20))
         if self.attackCounter >= 30:
-            self.mode = 'attack!'
+            self.mode = 'chase'
             self.attackCounter = 0
         self.attackCounter += 1
 
@@ -312,10 +312,14 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.frozenUp = 0
                 self.frozenDown = 0
                 #change this later so that mode is toggled by a cirlceofattack thing
-                self.mode = 'attack!'
+                if self.mode == 'chase' or self.mode == 'loiter':
+                    self.mode = 'attack!'
                 break
+            elif self.mode == 'attack!' or self.mode == 'meelecooldown' or self.mode == 'attacked' or self.mode == 'attacking':
+                    pass
             else:
                 self.mode = 'chase'
+                self.attackCounter = 0
             if self.collisionRect.colliderect(sprite.collisionRect):
                 if sprite.collisionRect.collidepoint(self.collisionRect.midtop):
                     _upEnable = False

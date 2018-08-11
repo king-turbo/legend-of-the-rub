@@ -84,7 +84,9 @@ class Hero(pygame.sprite.Sprite):
 
 
     def detectDefend(self, sprite):
+        # print(sprite.mode)
         if sprite.mode == 'attacked':
+            # print("hello")
             if (self.centerX - sprite.zoneOfAttack[0][0]) ** 2 + (self.centerY - sprite.zoneOfAttack[0][1]) ** 2 < \
                                             sprite.zoneOfAttack[1] ** 2:
                 if self.centerX > sprite.attackRect.centerx and sprite.attackDirection == 'right':
