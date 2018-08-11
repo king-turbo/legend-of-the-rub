@@ -170,6 +170,7 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def npcLoiterAI(self, character):
         pass
+    #TODO Loiter
 
     def npcEngageAI(self, character):
         speed = 2
