@@ -37,7 +37,8 @@ class PeonNPC(NPCSprite):
         self.walkLeftAnimation = Animation(_wl, 5)
         self.walkUpAnimation = Animation(_wu, 5)
         self.walkDownAnimation = Animation(_wd, 5)
-        NPCSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight, attackWidth, attackHeight)
+        self.attackDirection = ''
+        NPCSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight, attackWidth, attackHeight, bg)
 
 
     def updateAnimation(self, display):
@@ -52,20 +53,22 @@ class PeonNPC(NPCSprite):
                 self.hit = False
 
         if self.right:
-            if self.rightEnable:
-                self.walkRightAnimation.update()
+            self.walkRightAnimation.update()
             self.img = self.walkRightAnimation.img()
+            self.attackDirection = 'right'
         elif self.left:
-            if self.leftEnable:
-                self.walkLeftAnimation.update()
+            self.walkLeftAnimation.update()
             self.img = self.walkLeftAnimation.img()
+            self.attackDirection = 'left'
         elif self.up:
-            if self.upEnable:
-                self.walkUpAnimation.update()
+            self.walkUpAnimation.update()
             self.img = self.walkUpAnimation.img()
+            self.attackDirection = 'up'
         elif self.down:
-            if self.downEnable:
-                self.walkDownAnimation.update()
+            self.walkDownAnimation.update()
             self.img = self.walkDownAnimation.img()
+            self.attackDirection = 'down'
+
+
 
         self.img = pygame.transform.scale(self.img, self.size)

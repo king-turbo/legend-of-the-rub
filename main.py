@@ -36,7 +36,9 @@ def mainLoop():
         bg.screenMove(left,right,up,down)
         display_hitbox = toggleHitBox.update(toggleHitBoxKey)
 
+        #contains all combat updates
         bg.spriteAttacks(mouse1, mouse1Release, mouseX, mouseY, character)
+        #movement and AI updates
         bg.updateSprites(left, right, up, down, mouseX, mouseY, display_hitbox, character)
 
         pygame.display.flip()

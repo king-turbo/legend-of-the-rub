@@ -26,7 +26,9 @@ class Hero(pygame.sprite.Sprite):
         self.walkLeftAnimation = Animation(chImg.walkLeftArray,5)
         self.walkUpAnimation = Animation(chImg.walkUpArray, 5)
         self.walkDownAnimation = Animation(chImg.walkDownArray, 5)
+        self.mode = ''
 
+        self.health = 100
         self.swordImg =[pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
                         pygame.transform.scale(pygame.image.load(wpnImg.swordImg[1]),self.size)]
 
@@ -62,9 +64,11 @@ class Hero(pygame.sprite.Sprite):
 
     def detectAttack(self, mouse1Press, mouse1Release, mouseX, mouseY, display):
 
-        if mouse1Press:
+        if mouse1Press and self.meeleCoolDown == False:
+            self.mode = "attacking"
             display.blit(self.swordImg[0],(self.x - 20, self.y - 20))
-        if mouse1Release:
+        if mouse1Release and self.mode == "attacking":
+            self.mode = "cooldown"
             self.meeleCoolDown = True
         if self.meeleCoolDown:
             self.meeleCoolDownCounter += 1
@@ -73,8 +77,47 @@ class Hero(pygame.sprite.Sprite):
             self.meeleCoolDown = False
 
         if 1 < self.meeleCoolDownCounter < 20:
-            display.blit(self.swordImg[1], (self.x -20 , self.y - 20))
+            display.blit(self.swordImg[1], (self.x - 20 , self.y - 20))
             return True
         else:
             return False
 
+
+    def detectDefend(self, sprite):
+        if sprite.mode == 'attacked':
+            if (self.centerX - sprite.zoneOfAttack[0][0]) ** 2 + (self.centerY - sprite.zoneOfAttack[0][1]) ** 2 < \
+                                            sprite.zoneOfAttack[1] ** 2:
+                if self.centerX > sprite.attackRect.centerx and sprite.attackDirection == 'right':
+                    self.health -= 10
+                    self.hit = True
+                if self.centerX < sprite.attackRect.centerx and sprite.attackDirection == 'left':
+                    self.health -= 10
+                    self.hit = True
+                if self.centerY > sprite.attackRect.centery and sprite.attackDirection == 'down':
+                    self.health -= 10
+                    self.hit = True
+                if self.centerY < sprite.attackRect.centery and sprite.attackDirection == 'up':
+                    self.health -= 10
+                    self.hit = True
+
+        print(self.health)
+
+
+
+    # def detectDefend(self, mouse1, mouseX, mouseY, meeleCoolDown, character):
+    #     if mouse1:
+    #         if (character.centerX - self.zoneOfAttack[0][0]) ** 2 + (character.centerY - self.zoneOfAttack[0][1]) ** 2 < \
+    #                         self.zoneOfAttack[1] ** 2:
+    #             if character.centerX < self.attackRect.centerx and character.attackDirection == 'right':
+    #                 self.health -= 10
+    #                 self.hit = True
+    #             if character.centerX > self.attackRect.centerx and character.attackDirection == 'left':
+    #                 self.health -= 10
+    #                 self.hit = True
+    #
+    #             if character.centerY < self.attackRect.centery and character.attackDirection == 'down':
+    #                 self.health -= 10
+    #                 self.hit = True
+    #             if character.centerY > self.attackRect.centery and character.attackDirection == 'up':
+    #                 self.health -= 10
+    #                 self.hit = True

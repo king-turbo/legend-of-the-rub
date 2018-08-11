@@ -3,7 +3,7 @@ import time
 import random
 from pygame.locals import *
 from random import randint
-
+from spriteimages import WeaponImages as wpnImg
 
 class EnvSprite(pygame.sprite.Sprite):
     def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, collisionOffsetX=0,
@@ -39,7 +39,7 @@ class EnvSprite(pygame.sprite.Sprite):
 
 class NPCSprite(pygame.sprite.Sprite):
     def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, attackWidth,
-                 attackHeight):
+                 attackHeight, display):
         pygame.sprite.Sprite.__init__(self)
         self.minusTen = pygame.transform.scale(self.minusTen, self.size)
         self.spriteHeight = self.img.get_height()
@@ -52,6 +52,7 @@ class NPCSprite(pygame.sprite.Sprite):
         self.x = coords[0]
         self.y = coords[1]
         self.rect = self.img.get_rect()
+        self.display = display
         self.collisionWidth = collisionWidth
         self.collisionHeight = collisionHeight
         self.attackHeight = attackHeight
@@ -93,6 +94,10 @@ class NPCSprite(pygame.sprite.Sprite):
         self.npcPatience = randint(10,20)
         self.mode = 'engage'
 
+        self.attackCounter = 0
+
+        self.swordImg = [pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
+                         pygame.transform.scale(pygame.image.load(wpnImg.swordImg[1]), self.size)]
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
 
@@ -108,7 +113,7 @@ class NPCSprite(pygame.sprite.Sprite):
 
 
     def detectDefend(self, mouse1, mouseX, mouseY, meeleCoolDown, character):
-        if mouse1:
+        if character.mode == "attack":
             if (character.centerX - self.zoneOfAttack[0][0]) ** 2 + (character.centerY - self.zoneOfAttack[0][1]) ** 2 < \
                             self.zoneOfAttack[1] ** 2:
                 if character.centerX < self.attackRect.centerx and character.attackDirection == 'right':
@@ -128,17 +133,39 @@ class NPCSprite(pygame.sprite.Sprite):
 
     def npcAI(self, character):
 
-
-
         if self.mode == 'loiter':
             self.npcLoiterAI(character)
-        if self.mode == 'engage':
+        if self.mode == 'chase':
             self.npcEngageAI(character)
-        if self.mode == 'attack':
+        if self.mode == 'attack!' or self.mode == 'meelecooldown' or self.mode == 'attacked' or self.mode == 'attacking':
             self.npcAttackAI(character)
 
     def npcAttackAI(self, character):
-        print("we're attacking")
+        if character.collisionRect.centerx < self.collisionRect.centerx:
+            self.left = True
+        elif character.collisionRect.centerx > self.collisionRect.centerx:
+            self.right = True
+        elif character.collisionRect.centery > self.collisionRect.centery:
+            self.down = True
+        elif character.collisionRect.centery < self.collisionRect.centery:
+            self.up = True
+
+                                #TODO: change this to attack speed later
+        if self.attackCounter <= 15:
+            self.mode = 'attacking'
+            self.display.blit(self.swordImg[0], (self.x - 20, self.y - 20))
+        if self.attackCounter > 15 and self.attackCounter < 18:
+            self.mode = 'attacked'
+            self.display.blit(self.swordImg[1], (self.x - 20, self.y - 20))
+        if self.attackCounter >= 18:
+            self.mode = 'meelecooldown'
+            self.display.blit(self.swordImg[1], (self.x - 20, self.y - 20))
+        if self.attackCounter >= 30:
+            self.mode = 'attack!'
+            self.attackCounter = 0
+        self.attackCounter += 1
+
+        #TODO: figure out why health isn't lowering
 
 
     def npcLoiterAI(self, character):
@@ -284,10 +311,11 @@ class NPCSprite(pygame.sprite.Sprite):
                 self.frozenRight = 0
                 self.frozenUp = 0
                 self.frozenDown = 0
-                self.mode = 'attack'
+                #change this later so that mode is toggled by a cirlceofattack thing
+                self.mode = 'attack!'
                 break
-
-            #TODO: may have to move this when NPCs can use both ranged and melee attacks
+            else:
+                self.mode = 'chase'
             if self.collisionRect.colliderect(sprite.collisionRect):
                 if sprite.collisionRect.collidepoint(self.collisionRect.midtop):
                     _upEnable = False

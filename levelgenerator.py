@@ -161,6 +161,7 @@ class Background(pygame.sprite.Sprite):
         meeleeCoolDown = character.detectAttack(mouse1Press, mouse1Release, mouseX, mouseY, self.gameDisplay)
         for sprite in self.npcSpriteList:
             sprite.detectDefend(mouse1Release, mouseX, mouseY, meeleeCoolDown,character)
+            character.detectDefend(sprite)
 
     def updateAI(self, character):
         for sprite in self.npcSpriteList:
