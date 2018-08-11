@@ -384,7 +384,6 @@ class NPCSprite(pygame.sprite.Sprite):
 
 
 
-
 class Animation:
         def __init__(self, imgs, speed):
             self.imgs = []
