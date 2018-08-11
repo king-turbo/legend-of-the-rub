@@ -55,6 +55,8 @@ class EnvironmentImages:
     # tree
     tree1 = os.path.join(cwd, 'sprites', 'environment', 'Plants', 'tree1.png')
 
+    grass1 = os.path.join(cwd, 'sprites', 'environment', 'Ground', 'grass1.png')
+
 
 class TextImgs:
     minusTen = os.path.join(cwd, 'sprites', 'character', 'combat_text', 'minusTen.png')

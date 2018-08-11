@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import os
 from npcs import PeonNPC
-from environmentsprites import Tree, Bush
+from environmentsprites import Tree, Bush, Grass
 import math
 pygame.init()
 cwd = os.getcwd()
@@ -15,6 +15,7 @@ class Background(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.envSpriteList = []
         self.npcSpriteList = []
+        self.groundSpriteList = []
         self.DISPLAY_HEIGHT = DISPLAY_HEIGHT
         self.DISPLAY_WIDTH = DISPLAY_WIDTH
         self.zoom = zoom
@@ -36,6 +37,9 @@ class Background(pygame.sprite.Sprite):
         for bushLoc in spriteDict['bush']:
             IDNum += 1
             self.envSpriteList.append(Bush(bushLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
+
+        for grassLoc in spriteDict['grass']:
+            self.groundSpriteList.append(Grass(grassLoc, self.zoom, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
 
         for peonLoc in spriteDict['peon']:
             IDNum +=1
@@ -98,28 +102,28 @@ class Background(pygame.sprite.Sprite):
         if left and self.leftEnable == True:
             if up or down:
                 _diag = math.sqrt(2)
-            for sprite in self.envSpriteList + self.npcSpriteList:
+            for sprite in self.envSpriteList + self.npcSpriteList + self.groundSpriteList:
                 sprite.x += int(self.heroSpeed / _diag)
                 sprite.updateCollisionBox(int(self.heroSpeed / _diag), 0)
 
         if right and self.rightEnable == True:
             if up or down:
                 _diag = math.sqrt(2)
-            for sprite in self.envSpriteList + self.npcSpriteList:
+            for sprite in self.envSpriteList + self.npcSpriteList + self.groundSpriteList:
                 sprite.x -= int(self.heroSpeed / _diag)
                 sprite.updateCollisionBox(int(-self.heroSpeed / _diag), 0)
 
         if up and self.upEnable == True:
             if left or right:
                 _diag = math.sqrt(2)
-            for sprite in self.envSpriteList + self.npcSpriteList:
+            for sprite in self.envSpriteList + self.npcSpriteList + self.groundSpriteList:
                 sprite.y += int(self.heroSpeed / _diag)
                 sprite.updateCollisionBox(0, int(self.heroSpeed / _diag))
 
         if down and self.downEnable == True:
             if left or right:
                 _diag = math.sqrt(2)
-            for sprite in self.envSpriteList + self.npcSpriteList:
+            for sprite in self.envSpriteList + self.npcSpriteList + self.groundSpriteList:
                 sprite.y -= int(self.heroSpeed / _diag)
                 sprite.updateCollisionBox(0, int(-self.heroSpeed / _diag))
 
@@ -133,6 +137,9 @@ class Background(pygame.sprite.Sprite):
             sprite.updateAnimation(self.gameDisplay)
 
         #Draw order
+        for sprite in self.groundSpriteList:
+            self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+
         _a = self.envSpriteList + self.npcSpriteList
         _a.append(character)
         _a.sort()

@@ -24,6 +24,7 @@ class EnvSprite(pygame.sprite.Sprite):
         self.collisionHeight = collisionHeight
         self.collisionoffsetX = collisionOffsetX
         self.collisionoffsetY = collisionOffsetY
+
         self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.collisionWidth / 2 +
                                           self.collisionoffsetX, self.y + (self.spriteHeight) * zoom -
                                           self.collisionHeight + 10 + self.collisionoffsetY),
@@ -98,6 +99,8 @@ class NPCSprite(pygame.sprite.Sprite):
 
         self.swordImg = [pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
                          pygame.transform.scale(pygame.image.load(wpnImg.swordImg[1]), self.size)]
+
+
     def __lt__(self, other):
         return self.y < other.y + (other.spriteHeight - 32) * self.zoom
 
@@ -122,13 +125,13 @@ class NPCSprite(pygame.sprite.Sprite):
                 if character.centerX > self.attackRect.centerx and character.attackDirection == 'left':
                     self.health -= 10
                     self.hit = True
-
                 if character.centerY < self.attackRect.centery and character.attackDirection == 'down':
                     self.health -= 10
                     self.hit = True
                 if character.centerY > self.attackRect.centery and character.attackDirection == 'up':
                     self.health -= 10
                     self.hit = True
+
 
 
     def npcAI(self, character):

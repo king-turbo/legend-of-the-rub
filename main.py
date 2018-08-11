@@ -43,7 +43,7 @@ def mainLoop():
 
         pygame.display.flip()
         procTime = time.time() - tic
-        # print(procTime)
+        print(procTime)
         clk.tick(FRAME_SPEED - procTime)
 
 
@@ -66,6 +66,7 @@ if __name__ == "__main__":
     # map = mapeditor.Map(maps.treecode)
     # map = mapeditor.Map(maps.treecode1)
     map = mapeditor.Map(maps.twodudes)
+    map = mapeditor.Map(maps.grass)
     bg.addSprites(map.parseMap())
 
     mainLoop()

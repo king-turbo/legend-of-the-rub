@@ -26,3 +26,11 @@ class Bush(EnvSprite):
         self.img = pygame.image.load(envImg.bush1).convert_alpha()
         EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)
 
+
+class Grass(EnvSprite):
+    def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
+        collisionWidth = 0
+        collisionHeight = 0
+        self.spriteType = "Ground"
+        self.img = pygame.image.load(envImg.grass1).convert_alpha()
+        EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)

@@ -45,6 +45,7 @@ class PeonNPC(NPCSprite):
 
         #TODO: make all the hit stuff better
         if self.hit:
+            print("wtf")
             self.hitAnimaitonCounter += 1
             display.blit(self.minusTen, (self.x, self.y - self.hitAnimaitonCounter * 2))
 
