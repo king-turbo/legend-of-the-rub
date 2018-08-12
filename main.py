@@ -63,10 +63,10 @@ if __name__ == "__main__":
 
     character = Hero(heroSpeed, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom)
     bg = Background(zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, character, gameDisplay)
-    # map = mapeditor.Map(maps.treecode)
+    map = mapeditor.Map(maps.treecode)
     # map = mapeditor.Map(maps.treecode1)
-    map = mapeditor.Map(maps.twodudes)
-    map = mapeditor.Map(maps.grass)
+    # map = mapeditor.Map(maps.twodudes)
+    # map = mapeditor.Map(maps.grass)
     bg.addSprites(map.parseMap())
 
     mainLoop()
