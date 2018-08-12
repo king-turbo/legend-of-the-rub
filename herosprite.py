@@ -2,7 +2,8 @@ import pygame
 from spriteimages import CharacterImgs as chImg
 from spriteimages import WeaponImages as wpnImg
 from spritedefs import Animation
-
+pygame.font.init()
+font = pygame.font.SysFont('Comic Sans MS', 16)
 class Hero(pygame.sprite.Sprite):
     def __init__(self, heroSpeed, DISPLAY_WIDTH, DISPLAY_HEIGHT, zoom):
         pygame.sprite.Sprite.__init__(self)
@@ -27,7 +28,7 @@ class Hero(pygame.sprite.Sprite):
         self.walkUpAnimation = Animation(chImg.walkUpArray, 5)
         self.walkDownAnimation = Animation(chImg.walkDownArray, 5)
         self.mode = ''
-
+        self.loctext = font.render('Y: {}'.format(self.y + self.spriteHeight), False, (255, 0, 0))
         self.health = 100
         self.swordImg =[pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
                         pygame.transform.scale(pygame.image.load(wpnImg.swordImg[1]),self.size)]
@@ -35,7 +36,7 @@ class Hero(pygame.sprite.Sprite):
         self.attackDirection = ''
 
     def __lt__(self, other):
-        return self.y < other.y + (other.spriteHeight - 32) * self.zoom
+        return self.y + self.spriteHeight < other.y + (other.spriteHeight)
 
     def updateAnimation(self, left, right, up, down):
 

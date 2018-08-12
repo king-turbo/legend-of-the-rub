@@ -158,10 +158,13 @@ class Background(pygame.sprite.Sprite):
 
         #Visual hitbox toggler
         if display_hitbox:
+            self.gameDisplay.blit(character.loctext, (
+            character.x + character.spriteWidth, character.y + character.spriteHeight))
             pygame.draw.rect(self.gameDisplay, SOMECOLOR2, character.collisionRect)
             for sprite in self.envSpriteList + self.npcSpriteList:
                 pygame.draw.rect(self.gameDisplay, SOMECOLOR, sprite.collisionRect, 2)
-            # for sprite in self.npcSpriteList:
+            for sprite in self.envSpriteList:
+                self.gameDisplay.blit(sprite.loctext,(sprite.x + sprite.spriteWidth , sprite.y + sprite.spriteHeight ))
             #     pygame.draw.rect(self.gameDisplay,SOMECOLOR2,sprite.attackRect)
                 # pygame.draw.circle(self.gameDisplay, SOMECOLOR2, sprite.zoneOfAttack[0], sprite.zoneOfAttack[1])
 

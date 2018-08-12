@@ -4,17 +4,21 @@ import random
 from pygame.locals import *
 from random import randint
 from spriteimages import WeaponImages as wpnImg
+pygame.font.init()
+font = pygame.font.SysFont('Comic Sans MS', 16)
 
 class EnvSprite(pygame.sprite.Sprite):
     def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, collisionOffsetX=0,
                  collisionOffsetY=0):
         pygame.sprite.Sprite.__init__(self)
-        self.spriteHeight = self.img.get_height()
+
         self.DISPLAY_WIDTH = display_width
         self.DISPLAY_HEIGHT = display_height
-        self.spriteWidth = self.img.get_width()
+
         self.size = tuple([i * zoom for i in self.img.get_rect().size])
         self.img = pygame.transform.scale(self.img, self.size)
+        self.spriteHeight = self.img.get_height()
+        self.spriteWidth = self.img.get_width()
         self.zoom = zoom
         self.x = coords[0]
         self.y = coords[1]
@@ -24,18 +28,20 @@ class EnvSprite(pygame.sprite.Sprite):
         self.collisionHeight = collisionHeight
         self.collisionoffsetX = collisionOffsetX
         self.collisionoffsetY = collisionOffsetY
+        self.loctext = font.render('Y: {}'.format(self.y + self.spriteHeight), False, (255, 0, 0))
 
-        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.collisionWidth / 2 +
-                                          self.collisionoffsetX, self.y + (self.spriteHeight) * zoom -
+        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) - self.collisionWidth / 2 +
+                                          self.collisionoffsetX, self.y + (self.spriteHeight) -
                                           self.collisionHeight + 10 + self.collisionoffsetY),
                                          (self.collisionWidth, self.collisionHeight))
 
 
     def __lt__(self, other):
-        return self.y < other.y + (other.spriteHeight - 32) * self.zoom
+        return self.y + self.spriteHeight< other.y + (other.spriteHeight)
 
     def updateCollisionBox(self, x, y):
         self.collisionRect.move_ip(x, y)
+        self.loctext = font.render('Y: {}'.format(self.y + self.spriteHeight), False, (255, 0, 0))
 
 
 class NPCSprite(pygame.sprite.Sprite):
@@ -43,12 +49,13 @@ class NPCSprite(pygame.sprite.Sprite):
                  attackHeight, display):
         pygame.sprite.Sprite.__init__(self)
         self.minusTen = pygame.transform.scale(self.minusTen, self.size)
-        self.spriteHeight = self.img.get_height()
+
         self.DISPLAY_WIDTH = display_width
         self.DISPLAY_HEIGHT = display_height
-        self.spriteWidth = self.img.get_width()
         self.size = tuple([i * zoom for i in self.img.get_rect().size])
         self.img = pygame.transform.scale(self.img, self.size)
+        self.spriteHeight = self.img.get_height()
+        self.spriteWidth = self.img.get_width()
         self.zoom = zoom
         self.x = coords[0]
         self.y = coords[1]
@@ -58,16 +65,16 @@ class NPCSprite(pygame.sprite.Sprite):
         self.collisionHeight = collisionHeight
         self.attackHeight = attackHeight
         self.attackWidth = attackWidth
-        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.collisionWidth / 2,
-                                          self.y + (self.spriteHeight) * zoom - self.collisionHeight + 10),
+        self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 2) - self.collisionWidth / 2,
+                                          self.y + (self.spriteHeight) - self.collisionHeight + 10),
                                          (self.collisionWidth, self.collisionHeight))
 
-        self.attackRect = pygame.Rect((self.x + (self.spriteWidth / 2) * zoom - self.attackWidth / 2,
-                                       self.y + (self.spriteHeight) * zoom - self.attackHeight),
+        self.attackRect = pygame.Rect((self.x + (self.spriteWidth / 2)  - self.attackWidth / 2,
+                                       self.y + (self.spriteHeight) - self.attackHeight),
                                       (self.attackWidth, self.attackHeight))
 
-        self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2 * zoom), int(self.y + self.spriteHeight / 2 * zoom)],
-                             int(self.spriteHeight / 2 * zoom) + 45]
+        self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2), int(self.y + self.spriteHeight / 2)],
+                             int(self.spriteHeight / 2 ) + 45]
 
         self.spriteType = "NPC"
         self.upEnable = True
@@ -102,7 +109,7 @@ class NPCSprite(pygame.sprite.Sprite):
 
 
     def __lt__(self, other):
-        return self.y < other.y + (other.spriteHeight - 32) * self.zoom
+        return self.y + self.spriteHeight < other.y + (other.spriteHeight)
 
     # def __gt__(self,other):
     #     return self.IDNum > other.IDNum
