@@ -15,9 +15,12 @@ class SpriteCodes:
     peonCode = (DARK_RED, DARK_RED, DARK_RED,
                 DARK_RED, DARK_RED, DARK_RED,
                 DARK_RED, DARK_RED, DARK_RED)
+
     grassCode = (LIGHT_GREEN,LIGHT_GREEN,LIGHT_GREEN,
                  LIGHT_GREEN,LIGHT_GREEN,LIGHT_GREEN,
                  LIGHT_GREEN,LIGHT_GREEN,LIGHT_GREEN,)
+
+
 
 
 

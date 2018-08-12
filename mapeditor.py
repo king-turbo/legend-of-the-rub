@@ -51,4 +51,5 @@ class MapDir:
     treecode1 = os.path.join(cwd, 'maps','treecode1.png')
     whittest = os.path.join(cwd, 'maps', 'white.png')
     twodudes = os.path.join(cwd,'maps','twodudes.png')
-    grass = os.path.join(cwd,'maps','grass.png')
+    grassland = os.path.join(cwd,'maps','grassland.png')
+    funtimes = os.path.join(cwd,'maps','funtimes.png')

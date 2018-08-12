@@ -1,3 +1,4 @@
+import time
 import pygame
 from pygame.locals import *
 import os
@@ -143,6 +144,7 @@ class Background(pygame.sprite.Sprite):
         _a = self.envSpriteList + self.npcSpriteList
         _a.append(character)
         _a.sort()
+
         for sprite in _a:
             self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
 
