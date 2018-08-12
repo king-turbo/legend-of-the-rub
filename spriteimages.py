@@ -56,6 +56,8 @@ class EnvironmentImages:
     tree1 = os.path.join(cwd, 'sprites', 'environment', 'Plants', 'tree1.png')
 
     grass1 = os.path.join(cwd, 'sprites', 'environment', 'Ground', 'grass1.png')
+    grass_flower1 = os.path.join(cwd, 'sprites', 'environment', 'Ground', 'grass_flower1.png')
+    grass_flower2 = os.path.join(cwd, 'sprites', 'environment', 'Ground', 'grass_flower2.png')
 
 
 class TextImgs:

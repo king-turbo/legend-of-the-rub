@@ -3,7 +3,7 @@ from spritedefs import EnvSprite
 import pygame
 from spriteimages import EnvironmentImages as envImg
 
-
+from random import randint
 
 class Tree(EnvSprite):
     def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
@@ -32,5 +32,11 @@ class Grass(EnvSprite):
         collisionWidth = 0
         collisionHeight = 0
         self.spriteType = "Ground"
-        self.img = pygame.image.load(envImg.grass1).convert_alpha()
+        a = randint(0, 50)
+        if a < 48:
+            self.img = pygame.image.load(envImg.grass1).convert_alpha()
+        elif a < 49:
+            self.img = pygame.image.load(envImg.grass_flower1).convert_alpha()
+        else:
+            self.img = pygame.image.load(envImg.grass_flower2).convert_alpha()
         EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)
