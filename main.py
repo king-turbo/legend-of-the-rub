@@ -43,7 +43,7 @@ def mainLoop():
 
         pygame.display.flip()
         procTime = time.time() - tic
-        # print(procTime)
+        print(procTime)
         clk.tick(FRAME_SPEED - procTime)
 
 

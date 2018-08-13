@@ -45,8 +45,49 @@ class CharacterImgs:
 
 
 class WeaponImages:
+    cleaverWindUpLeftImg=[]
+    cleaverSwingLeftImg=[]
+
+    cleaverWindUpRightImg = []
+    cleaverSwingRightImg = []
+
     swordImg = [os.path.join(cwd, 'sprites', 'character', 'weapons', 'swordup.png'),
                 os.path.join(cwd, 'sprites', 'character', 'weapons', 'sworddown.png')]
+
+    cleaverWindUpLeftDir =[os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left1.png'),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left2.png' ),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left3.png' ),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left4.png' )]
+
+    cleaverSwingLeftDir=[os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left4.png'),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left5.png'),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left6.png'),
+                     os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left1.png')]
+
+    cleaverRaised = pygame.image.load(os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left4.png'))
+    cleaverLowered = pygame.image.load(os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-left1.png'))
+
+    for img in cleaverWindUpLeftDir:
+        cleaverWindUpLeftImg.append(pygame.image.load(img))
+    for img in cleaverSwingLeftDir:
+        cleaverSwingLeftImg.append(pygame.image.load(img))
+
+    cleaverWindUpRightDir = [os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right1.png', ),
+                      os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right2.png', ),
+                      os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right3.png', ),
+                      os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right4.png')]
+
+    cleaverSwingRightDir =  [os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right5.png'),
+                      os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right6.png'),
+                      os.path.join(cwd, 'sprites', 'character', 'weapons', 'cleaver-right1.png')]
+
+    for img in cleaverWindUpRightDir:
+        cleaverWindUpRightImg.append(pygame.image.load(img))
+
+    for img in cleaverSwingRightDir:
+        cleaverSwingRightImg.append(pygame.image.load(img))
+
+    nothingImg = pygame.image.load(os.path.join(cwd, 'sprites', 'character', 'weapons', 'nothing.png', ))
 
 
 class EnvironmentImages:

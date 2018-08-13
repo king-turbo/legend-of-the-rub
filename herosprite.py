@@ -21,13 +21,26 @@ class Hero(pygame.sprite.Sprite):
         self.spriteHeight = self.img.get_height()
         self.collisionRect = pygame.Rect((self.x + (self.spriteWidth / 3), self.y + self.spriteHeight - 10), (32, 10))
         self.meeleCoolDown = False
-        self.meeleCoolDownCounter = 0
+        self.meeleCounter = 0
         #Sprite Animations
         self.walkRightAnimation = Animation(chImg.walkRightArray, 5)
         self.walkLeftAnimation = Animation(chImg.walkLeftArray,5)
         self.walkUpAnimation = Animation(chImg.walkUpArray, 5)
         self.walkDownAnimation = Animation(chImg.walkDownArray, 5)
-        self.mode = ''
+        self.cleaverAnimationWindUpLeft = Animation(wpnImg.cleaverWindUpLeftImg,3)
+        self.cleaverAnimationWindUpRight = Animation(wpnImg.cleaverWindUpRightImg,3)
+        self.cleaverAnimationSwingLeft = Animation(wpnImg.cleaverSwingLeftImg,2)
+        self.cleaverAnimationSwingRight = Animation(wpnImg.cleaverSwingRightImg,2)
+        self.nothingEquipped = wpnImg.nothingImg
+        self.spriteType = 'hero'
+        self.quickAttackTrigger = False
+        self.meeleCoolDownCounter = 0
+        self.equippedItemImg = self.nothingEquipped
+        self.animationWU = self.cleaverAnimationWindUpLeft
+        self.mode = 'idle'
+        self.equippedX = self.x  # +20 for right sided swings - 20 for left sided swings
+        self.equippedY = self.y - 18
+        #loctext is used to show the location of the bottom y value of sprite
         self.loctext = font.render('Y: {}'.format(self.y + self.spriteHeight), False, (255, 0, 0))
         self.health = 100
         self.swordImg =[pygame.transform.scale(pygame.image.load(wpnImg.swordImg[0]), self.size),
@@ -37,6 +50,21 @@ class Hero(pygame.sprite.Sprite):
 
     def __lt__(self, other):
         return self.y + self.spriteHeight < other.y + (other.spriteHeight)
+
+    def windUpWeaponAnimationUpdateSync(self):
+        self.cleaverAnimationWindUpLeft.update()
+        self.cleaverAnimationWindUpRight.update()
+    def swingWeaponAnimationUpdateSync(self):
+        self.cleaverAnimationSwingLeft.update()
+        self.cleaverAnimationSwingRight.update()
+
+    def windUpWeaponAnimationResetSync(self):
+        self.cleaverAnimationWindUpLeft.resetAnimation()
+        self.cleaverAnimationWindUpRight.resetAnimation()
+    def swingWeaponAnimationResetSync(self):
+        self.cleaverAnimationSwingLeft.resetAnimation()
+        self.cleaverAnimationSwingRight.resetAnimation()
+
 
     def updateAnimation(self, left, right, up, down):
 
@@ -61,33 +89,78 @@ class Hero(pygame.sprite.Sprite):
             self.walkDownAnimation.update()
             self.img = self.walkDownAnimation.img()
             self.attackDirection = 'down'
+        #scale the image back to zoom size
         self.img = pygame.transform.scale(self.img, self.size)
 
     def detectAttack(self, mouse1Press, mouse1Release, mouseX, mouseY, display):
 
-        if mouse1Press and self.meeleCoolDown == False:
-            self.mode = "attacking"
-            display.blit(self.swordImg[0],(self.x - 20, self.y - 20))
-        if mouse1Release and self.mode == "attacking":
-            self.mode = "cooldown"
-            self.meeleCoolDown = True
-        if self.meeleCoolDown:
-            self.meeleCoolDownCounter += 1
-        if self.meeleCoolDownCounter == 20:
-            self.meeleCoolDownCounter = 0
-            self.meeleCoolDown = False
+        if self.attackDirection == 'right':
+            self.equippedX = self.x + 21
+            self.animationWU = self.cleaverAnimationWindUpRight
+            self.animationSw = self.cleaverAnimationSwingRight
+        if self.attackDirection == 'left':
+            self.equippedX = self.x - 20
+            self.animationWU = self.cleaverAnimationWindUpLeft
+            self.animationSw = self.cleaverAnimationSwingLeft
 
-        if 1 < self.meeleCoolDownCounter < 20:
-            display.blit(self.swordImg[1], (self.x - 20 , self.y - 20))
-            return True
-        else:
-            return False
+        if self.meeleCoolDown:
+            print(self.meeleCoolDownCounter)
+        if self.mode == 'idle' and mouse1Press and not self.meeleCoolDown:
+
+            self.windUpWeaponAnimationResetSync()
+            self.mode = 'raising'
+
+                    ##TODO: add up and down too
+
+        if self.mode == "raising":
+            self.windUpWeaponAnimationUpdateSync()
+            self.equippedItemImg = self.animationWU.img()
+            if mouse1Release:
+                self.quickAttackTrigger = True
+            if self.animationWU.endOfAnimation:
+                if self.quickAttackTrigger:
+                    self.mode = 'swinging'
+                else:
+                    self.mode = 'holding'
+
+        if self.mode == 'holding':
+            self.equippedItemImg = self.animationWU.imgs[-1]
+
+            if mouse1Release:
+                self.mode = 'swinging'
+
+        if self.mode == 'swinging':
+            self.quickAttackTrigger = False
+            self.equippedItemImg = self.animationSw.img()
+            self.swingWeaponAnimationUpdateSync()
+            if self.animationSw.endOfAnimation:
+                self.swingWeaponAnimationUpdateSync()
+                self.mode = 'attacked'
+                self.meeleCoolDown = True
+
+
+        if self.mode == 'attacked':
+            self.equippedItemImg = self.animationWU.imgs[0]
+            self.meeleCounter += 1
+            if self.meeleCounter == 3:
+                self.mode = 'idle'
+                self.meeleCounter = 0
+
+        if self.mode == 'idle':
+            self.equippedItemImg = self.animationWU.imgs[0]
+
+        if self.meeleCoolDown ==  True:
+            if self.meeleCoolDownCounter >= 20:
+                self.meeleCoolDown = False
+                self.meeleCoolDownCounter = 0
+            self.meeleCoolDownCounter += 1
+
+        self.equippedItemImg = pygame.transform.scale(self.equippedItemImg, self.size)
+
 
 
     def detectDefend(self, sprite):
-        # print(sprite.mode)
         if sprite.mode == 'attacked':
-            # print("hello")
             if (self.centerX - sprite.zoneOfAttack[0][0]) ** 2 + (self.centerY - sprite.zoneOfAttack[0][1]) ** 2 < \
                                             sprite.zoneOfAttack[1] ** 2:
                 if self.centerX > sprite.attackRect.centerx and sprite.attackDirection == 'right':
@@ -103,7 +176,7 @@ class Hero(pygame.sprite.Sprite):
                     self.health -= 10
                     self.hit = True
 
-        print(self.health)
+
 
 
 

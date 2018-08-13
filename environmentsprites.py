@@ -12,7 +12,7 @@ class Tree(EnvSprite):
         collisionOffsetX = -60
         collisionOffsetY = 0
         self.img = pygame.image.load(envImg.tree1)
-        self.spriteType = "Env"
+        self.spriteType = "env"
         EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight,
                            collisionOffsetX, collisionOffsetY)
 
@@ -22,7 +22,7 @@ class Bush(EnvSprite):
     def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
         collisionWidth = 128
         collisionHeight = 64
-        self.spriteType = "Env"
+        self.spriteType = "env"
         self.img = pygame.image.load(envImg.bush1).convert_alpha()
         EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)
 
@@ -31,7 +31,7 @@ class Grass(EnvSprite):
     def __init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT):
         collisionWidth = 0
         collisionHeight = 0
-        self.spriteType = "Ground"
+
         a = randint(0, 50)
         if a < 48:
             self.img = pygame.image.load(envImg.grass1).convert_alpha()
@@ -39,4 +39,4 @@ class Grass(EnvSprite):
             self.img = pygame.image.load(envImg.grass_flower1).convert_alpha()
         else:
             self.img = pygame.image.load(envImg.grass_flower2).convert_alpha()
-        EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight)
+        EnvSprite.__init__(self, coords, zoom, DISPLAY_WIDTH, DISPLAY_HEIGHT, collisionWidth, collisionHeight,spriteType= "ground")

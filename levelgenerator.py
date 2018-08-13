@@ -141,12 +141,22 @@ class Background(pygame.sprite.Sprite):
         for sprite in self.groundSpriteList:
             self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
 
-        _a = self.envSpriteList + self.npcSpriteList
-        _a.append(character)
-        _a.sort()
+        _drawOrderList = self.envSpriteList + self.npcSpriteList
+        _drawOrderList.append(character)
+        _drawOrderList.sort()
 
-        for sprite in _a:
-            self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+        for sprite in _drawOrderList:
+            if sprite.spriteType == 'hero':
+                if sprite.attackDirection == 'right':
+                    self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+                    self.gameDisplay.blit(sprite.equippedItemImg, (sprite.equippedX, sprite.equippedY))
+                elif sprite.attackDirection == 'left':
+                    self.gameDisplay.blit(sprite.equippedItemImg, (sprite.equippedX, sprite.equippedY))
+                    self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+                else:
+                    self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
+            else:
+                self.gameDisplay.blit(sprite.img, (sprite.x, sprite.y))
 
         #NPC collision
         for i in range(len(self.npcSpriteList)):

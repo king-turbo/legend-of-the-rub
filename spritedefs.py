@@ -9,7 +9,7 @@ font = pygame.font.SysFont('Comic Sans MS', 16)
 
 class EnvSprite(pygame.sprite.Sprite):
     def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, collisionOffsetX=0,
-                 collisionOffsetY=0):
+                 collisionOffsetY=0, spriteType = 'env'):
         pygame.sprite.Sprite.__init__(self)
 
         self.DISPLAY_WIDTH = display_width
@@ -22,7 +22,7 @@ class EnvSprite(pygame.sprite.Sprite):
         self.zoom = zoom
         self.x = coords[0]
         self.y = coords[1]
-        self.spriteType = "Env"
+        self.spriteType = "env"
         self.rect = self.img.get_rect()
         self.collisionWidth = collisionWidth
         self.collisionHeight = collisionHeight
@@ -46,7 +46,7 @@ class EnvSprite(pygame.sprite.Sprite):
 
 class NPCSprite(pygame.sprite.Sprite):
     def __init__(self, coords, zoom, display_width, display_height, collisionWidth, collisionHeight, attackWidth,
-                 attackHeight, display):
+                 attackHeight, display,spriteType = 'npc'):
         pygame.sprite.Sprite.__init__(self)
         self.minusTen = pygame.transform.scale(self.minusTen, self.size)
 
@@ -76,7 +76,7 @@ class NPCSprite(pygame.sprite.Sprite):
         self.zoneOfAttack = [[int(self.x + self.spriteWidth / 2), int(self.y + self.spriteHeight / 2)],
                              int(self.spriteHeight / 2 ) + 45]
 
-        self.spriteType = "NPC"
+        self.spriteType = spriteType
         self.upEnable = True
         self.downEnable = True
         self.rightEnable = True
@@ -175,7 +175,7 @@ class NPCSprite(pygame.sprite.Sprite):
             self.attackCounter = 0
         self.attackCounter += 1
 
-        #TODO: figure out why health isn't lowering
+
 
 
     def npcLoiterAI(self, character):
@@ -401,24 +401,32 @@ class Animation:
             self.clkDividedCount = 0
             self.idlePos = imgs[0].convert_alpha()
             self.currentImg = self.imgs[0].convert_alpha()
+            self.endOfAnimation = False
             #TODO: come up with better way decide idle poistions
 
+        def resetAnimation(self):
+            self.clkDividedCount = 0
+            self.counter = 0
 
         def update(self, backwards=False):
             if backwards:
                 _bw = -1
             else:
                 _bw = 1
+            self.currentImg = self.imgs[self.clkDividedCount * _bw]
             if self.counter >= self.speed:
                 self.clkDividedCount += 1
                 self.counter = 0
             if self.clkDividedCount >= len(self.imgs):
                 self.clkDividedCount = 0
-            self.currentImg = self.imgs[self.clkDividedCount * _bw]
+                self.endOfAnimation = True
+            else:
+                self.endOfAnimation = False
             self.counter += 1
-
         def img(self):
             return self.currentImg
+
+
 
 
 
